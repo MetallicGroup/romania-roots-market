@@ -59,7 +59,7 @@ function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* HERO — vertical, full viewport height */}
-      <section className="relative min-h-screen w-full overflow-hidden">
+      <section className="relative min-h-[110vh] w-full overflow-hidden">
         {/* Map background */}
         <MapBackground />
 
