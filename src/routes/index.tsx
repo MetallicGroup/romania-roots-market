@@ -63,32 +63,32 @@ function Index() {
         {/* Map background */}
         <MapBackground />
 
-        {/* Header */}
-        <header className="relative z-20 flex items-start justify-between px-5 pt-5 sm:px-8">
-          {/* Video thumbnail — top left where logo was */}
-          <button
-            onClick={() => setVideoOpen(true)}
-            className="group relative w-[180px] overflow-hidden rounded-2xl shadow-lg ring-1 ring-forest/10 transition-transform hover:scale-[1.02] animate-fade-up"
-            style={{ aspectRatio: "16/9" }}
-          >
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(135deg,#3a2814 0%,#7a4a1c 50%,#c78118 100%)",
-              }}
-            />
-            <div className="absolute inset-0 bg-black/25" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="grid h-10 w-10 place-items-center rounded-full bg-cream/95 shadow-md transition-transform group-hover:scale-110">
-                <Play className="h-3.5 w-3.5 fill-forest text-forest" />
-              </span>
-            </div>
-            <span className="absolute bottom-1.5 left-2.5 font-serif text-[10px] font-medium text-cream/95">
-              Povestea noastră · 4:32
+        {/* Video thumbnail — absolute top-left corner, no padding */}
+        <button
+          onClick={() => setVideoOpen(true)}
+          className="absolute left-0 top-0 z-20 w-[180px] overflow-hidden rounded-br-2xl shadow-lg ring-1 ring-forest/10 transition-transform hover:scale-[1.02] animate-fade-up"
+          style={{ aspectRatio: "16/9" }}
+        >
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(135deg,#3a2814 0%,#7a4a1c 50%,#c78118 100%)",
+            }}
+          />
+          <div className="absolute inset-0 bg-black/25" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="grid h-10 w-10 place-items-center rounded-full bg-cream/95 shadow-md transition-transform group-hover:scale-110">
+              <Play className="h-3.5 w-3.5 fill-forest text-forest" />
             </span>
-          </button>
+          </div>
+          <span className="absolute bottom-1.5 left-2.5 font-serif text-[10px] font-medium text-cream/95">
+            Povestea noastră · 4:32
+          </span>
+        </button>
 
+        {/* Header */}
+        <header className="relative z-20 flex items-start justify-end px-5 pt-5 sm:px-8">
           <div className="flex flex-col items-end gap-2">
             <nav className="flex items-center gap-1.5">
               <IconBtn label="Categorii"><Menu className="h-[18px] w-[18px]" /></IconBtn>
