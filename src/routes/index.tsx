@@ -19,33 +19,10 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-type Product = {
-  id: string;
-  name: string;
-  region: string;
-  weights: string[];
-  price: number;
-  swatch: string;
-};
+type Product = (typeof catalog)[number];
 
-const products: Product[] = [
-  { id: "1", name: "Miere de salcâm", region: "Bihor", weights: ["250g", "500g", "1kg"], price: 42, swatch: "linear-gradient(160deg,#f5c150,#c78118)" },
-  { id: "2", name: "Miere de tei", region: "Argeș", weights: ["250g", "500g"], price: 38, swatch: "linear-gradient(160deg,#e6a94a,#8a5a1a)" },
-  { id: "3", name: "Dulceață de afine", region: "Bucovina", weights: ["220g", "400g"], price: 32, swatch: "linear-gradient(160deg,#5a3a7a,#241436)" },
-  { id: "4", name: "Miere poliflora", region: "Maramureș", weights: ["500g", "1kg"], price: 45, swatch: "linear-gradient(160deg,#eab24a,#a86b12)" },
-  { id: "5", name: "Dulceață de trandafiri", region: "Dobrogea", weights: ["220g"], price: 36, swatch: "linear-gradient(160deg,#e78ba5,#9a3a55)" },
-  { id: "6", name: "Zacuscă de casă", region: "Moldova", weights: ["300g", "500g"], price: 28, swatch: "linear-gradient(160deg,#c05c2a,#5a2010)" },
-];
+const products: Product[] = catalog.slice(0, 6);
 
-const regions = [
-  { name: "Maramureș", x: 32, y: 22 },
-  { name: "Bucovina", x: 55, y: 20 },
-  { name: "Transilvania", x: 38, y: 40 },
-  { name: "Moldova", x: 68, y: 38 },
-  { name: "Muntenia", x: 50, y: 62 },
-  { name: "Dobrogea", x: 78, y: 60 },
-  { name: "Banat", x: 18, y: 52 },
-];
 
 function Index() {
   const [videoOpen, setVideoOpen] = useState(false);
