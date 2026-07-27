@@ -388,3 +388,12 @@ function MapBackground() {
   );
 }
 
+
+function Stat({ n, l }: { n: string; l: string }) {
+  return (
+    <div className="rounded-2xl border border-cream/15 bg-cream/5 p-4 text-center">
+      <p className="font-serif text-2xl text-honey">{n}</p>
+      <p className="mt-1 text-xs text-cream/70">{l}</p>
+    </div>
+  );
+}
