@@ -68,7 +68,7 @@ function Index() {
         {/* Header */}
         <header className="relative z-20 flex items-center justify-between px-5 pt-5 sm:px-8">
           <a href="/" className="font-serif text-2xl font-semibold tracking-tight text-forest">
-            Prisma<span className="text-terracotta">.</span>Satului
+            nume site<span className="text-terracotta">.</span>
           </a>
           <nav className="flex items-center gap-1.5">
             <IconBtn label="Categorii"><Menu className="h-[18px] w-[18px]" /></IconBtn>
@@ -110,12 +110,10 @@ function Index() {
 
           {/* Headline */}
           <div className="max-w-md animate-fade-up" style={{ animationDelay: "80ms" }}>
-            <h1 className="font-serif text-[2rem] leading-[1.05] font-medium text-forest sm:text-5xl">
-              Gustul satului,<br />
-              <span className="italic text-terracotta">direct de la producător.</span>
+            <h1 className="font-serif text-[2rem] font-medium text-forest sm:text-5xl">
             </h1>
             <p className="mt-3 max-w-sm text-sm text-forest-soft sm:text-base">
-              Miere, dulcețuri și bunătăți culese din toate colțurile României.
+              {"\n"}
             </p>
           </div>
 
