@@ -64,28 +64,11 @@ function Index() {
         <MapBackground />
 
         {/* Header */}
-        <header className="relative z-20 flex items-center justify-between px-5 pt-5 sm:px-8">
-          <a href="/" className="font-serif text-2xl font-semibold tracking-tight text-forest">
-            nume site<span className="text-terracotta">.</span>
-          </a>
-          <nav className="flex items-center gap-1.5">
-            <IconBtn label="Categorii"><Menu className="h-[18px] w-[18px]" /></IconBtn>
-            <IconBtn label="Cont"><User className="h-[18px] w-[18px]" /></IconBtn>
-            <IconBtn label="Salvate" badge={saved.length}>
-              <Heart className="h-[18px] w-[18px]" />
-            </IconBtn>
-            <IconBtn label="Coș" badge={cart.length} onClick={() => setCartOpen(true)}>
-              <ShoppingBag className="h-[18px] w-[18px]" />
-            </IconBtn>
-          </nav>
-        </header>
-
-        {/* Hero content */}
-        <div className="relative z-10 flex flex-col gap-6 px-5 pt-8 sm:px-8">
-          {/* Video thumbnail — top left */}
+        <header className="relative z-20 flex items-start justify-between px-5 pt-5 sm:px-8">
+          {/* Video thumbnail — top left where logo was */}
           <button
             onClick={() => setVideoOpen(true)}
-            className="group relative w-[62%] max-w-[280px] overflow-hidden rounded-2xl shadow-lg ring-1 ring-forest/10 transition-transform hover:scale-[1.02] animate-fade-up"
+            className="group relative w-[180px] overflow-hidden rounded-2xl shadow-lg ring-1 ring-forest/10 transition-transform hover:scale-[1.02] animate-fade-up"
             style={{ aspectRatio: "16/9" }}
           >
             <div
@@ -97,47 +80,61 @@ function Index() {
             />
             <div className="absolute inset-0 bg-black/25" />
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="grid h-11 w-11 place-items-center rounded-full bg-cream/95 shadow-md transition-transform group-hover:scale-110">
-                <Play className="h-4 w-4 fill-forest text-forest" />
+              <span className="grid h-10 w-10 place-items-center rounded-full bg-cream/95 shadow-md transition-transform group-hover:scale-110">
+                <Play className="h-3.5 w-3.5 fill-forest text-forest" />
               </span>
             </div>
-            <span className="absolute bottom-2 left-3 font-serif text-[11px] font-medium text-cream/95">
+            <span className="absolute bottom-1.5 left-2.5 font-serif text-[10px] font-medium text-cream/95">
               Povestea noastră · 4:32
             </span>
           </button>
-        </div>
 
-        {/* Products — positioned over the Bulgaria area (bottom of the map) */}
-        <div className="absolute inset-x-0 bottom-0 z-10 px-5 pb-3 sm:px-8">
-          <div className="mx-auto max-w-5xl">
-            <div className="mb-3 flex items-center justify-between">
-              <div className="flex items-center gap-1 rounded-full bg-card/90 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
-                <Search className="h-3 w-3 shrink-0 text-forest-soft" />
-                <input
-                  type="text"
-                  placeholder="Caută"
-                  className="w-10 bg-transparent text-[10px] text-forest placeholder:text-forest-soft/70 focus:outline-none sm:w-14"
-                />
-              </div>
-              <span className="rounded-full bg-card/80 px-2 py-1 text-[10px] uppercase tracking-widest text-forest-soft backdrop-blur">
-                {products.length} produse
-              </span>
+          <div className="flex flex-col items-end gap-2">
+            <nav className="flex items-center gap-1.5">
+              <IconBtn label="Categorii"><Menu className="h-[18px] w-[18px]" /></IconBtn>
+              <IconBtn label="Cont"><User className="h-[18px] w-[18px]" /></IconBtn>
+              <IconBtn label="Salvate" badge={saved.length}>
+                <Heart className="h-[18px] w-[18px]" />
+              </IconBtn>
+              <IconBtn label="Coș" badge={cart.length} onClick={() => setCartOpen(true)}>
+                <ShoppingBag className="h-[18px] w-[18px]" />
+              </IconBtn>
+            </nav>
+            <a href="/" className="font-serif text-xl font-semibold tracking-tight text-forest">
+              nume site<span className="text-terracotta">.</span>
+            </a>
+          </div>
+        </header>
+
+        {/* Products — positioned over the Bulgaria area, full width edge-to-edge */}
+        <div className="absolute inset-x-0 bottom-0 z-10 px-1 pb-3">
+          <div className="mb-3 flex items-center justify-between px-2">
+            <div className="flex items-center gap-1 rounded-full bg-card/90 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
+              <Search className="h-3 w-3 shrink-0 text-forest-soft" />
+              <input
+                type="text"
+                placeholder="Caută"
+                className="w-10 bg-transparent text-[10px] text-forest placeholder:text-forest-soft/70 focus:outline-none sm:w-14"
+              />
             </div>
-            <div className="grid grid-cols-3 gap-2 sm:gap-3">
-              {products.map((p) => (
-                <ProductCard
-                  key={p.id}
-                  product={p}
-                  selectedWeight={selectedWeights[p.id] ?? p.weights[0]}
-                  onSelectWeight={(w) =>
-                    setSelectedWeights((s) => ({ ...s, [p.id]: w }))
-                  }
-                  isSaved={saved.includes(p.id)}
-                  onSave={() => toggleSave(p.id)}
-                  onAdd={() => addToCart(p.id)}
-                />
-              ))}
-            </div>
+            <span className="rounded-full bg-card/80 px-2 py-1 text-[10px] uppercase tracking-widest text-forest-soft backdrop-blur">
+              {products.length} produse
+            </span>
+          </div>
+          <div className="grid grid-cols-3 gap-[2px]">
+            {products.map((p) => (
+              <ProductCard
+                key={p.id}
+                product={p}
+                selectedWeight={selectedWeights[p.id] ?? p.weights[0]}
+                onSelectWeight={(w) =>
+                  setSelectedWeights((s) => ({ ...s, [p.id]: w }))
+                }
+                isSaved={saved.includes(p.id)}
+                onSave={() => toggleSave(p.id)}
+                onAdd={() => addToCart(p.id)}
+              />
+            ))}
           </div>
         </div>
       </section>
