@@ -105,28 +105,13 @@ function Index() {
               Povestea noastră · 4:32
             </span>
           </button>
-
-          {/* Headline */}
-          <div className="max-w-md animate-fade-up" style={{ animationDelay: "80ms" }}>
-            <h1 className="font-serif text-[2rem] font-medium text-forest sm:text-5xl">
-            </h1>
-            <p className="mt-3 max-w-sm text-sm text-forest-soft sm:text-base">
-              {"\n"}
-            </p>
-          </div>
         </div>
-      </section>
 
-      {/* Products section — below the hero so the map stays visible */}
-      <section className="relative z-20 bg-cream px-5 pb-10 pt-8 sm:px-8">
-        <div className="mx-auto max-w-5xl">
-          <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <h2 className="font-serif text-xl font-medium text-forest">
-                {"\n"}
-              </h2>
-              {/* Search — compact, above the products grid next to the count */}
-              <div className="flex items-center gap-1 rounded-full bg-card px-2 py-1.5 shadow-md ring-1 ring-forest/10">
+        {/* Products — positioned over the Bulgaria area (bottom of the map) */}
+        <div className="absolute inset-x-0 bottom-0 z-10 px-5 pb-6 sm:px-8">
+          <div className="mx-auto max-w-5xl">
+            <div className="mb-3 flex items-center justify-between">
+              <div className="flex items-center gap-1 rounded-full bg-card/90 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
                 <Search className="h-3 w-3 shrink-0 text-forest-soft" />
                 <input
                   type="text"
@@ -134,33 +119,29 @@ function Index() {
                   className="w-10 bg-transparent text-[10px] text-forest placeholder:text-forest-soft/70 focus:outline-none sm:w-14"
                 />
               </div>
+              <span className="rounded-full bg-card/80 px-2 py-1 text-[10px] uppercase tracking-widest text-forest-soft backdrop-blur">
+                {products.length} produse
+              </span>
             </div>
-            <span className="text-[11px] uppercase tracking-widest text-forest-soft">
-              {products.length} produse
-            </span>
-          </div>
-          <div className="grid grid-cols-3 gap-2 sm:gap-3">
-            {products.map((p) => (
-              <ProductCard
-                key={p.id}
-                product={p}
-                selectedWeight={selectedWeights[p.id] ?? p.weights[0]}
-                onSelectWeight={(w) =>
-                  setSelectedWeights((s) => ({ ...s, [p.id]: w }))
-                }
-                isSaved={saved.includes(p.id)}
-                onSave={() => toggleSave(p.id)}
-                onAdd={() => addToCart(p.id)}
-              />
-            ))}
-          </div>
-          <div className="mt-5 flex justify-center">
-            <button className="rounded-full border border-forest/20 bg-card px-6 py-3 text-sm font-medium text-forest transition-all hover:border-forest/40 hover:shadow-md">
-              Vezi toate produsele →
-            </button>
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
+              {products.map((p) => (
+                <ProductCard
+                  key={p.id}
+                  product={p}
+                  selectedWeight={selectedWeights[p.id] ?? p.weights[0]}
+                  onSelectWeight={(w) =>
+                    setSelectedWeights((s) => ({ ...s, [p.id]: w }))
+                  }
+                  isSaved={saved.includes(p.id)}
+                  onSave={() => toggleSave(p.id)}
+                  onAdd={() => addToCart(p.id)}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
+
 
       {/* Video modal */}
       {videoOpen && (
@@ -345,21 +326,7 @@ function MapBackground() {
         alt="Hartă România"
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-cream/50 via-cream/20 to-cream/95" />
-
-      {/* Region labels — HTML for crisp typography */}
-      <div className="absolute inset-0 pointer-events-none">
-        {regions.map((r) => (
-          <span
-            key={r.name}
-            className="absolute -translate-x-1/2 translate-y-2 whitespace-nowrap font-serif text-[9px] tracking-wide text-forest/70 sm:text-[10px]"
-            style={{ left: `${r.x}%`, top: `${r.y}%` }}
-          >
-            <MapPin className="mr-0.5 inline h-2 w-2 text-terracotta" />
-            {r.name}
-          </span>
-        ))}
-      </div>
     </div>
   );
 }
+
