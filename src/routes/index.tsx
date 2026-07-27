@@ -66,7 +66,7 @@ function Index() {
         {/* Video thumbnail — absolute top-left corner, no padding */}
         <button
           onClick={() => setVideoOpen(true)}
-          className="absolute left-0 top-0 z-20 w-[180px] overflow-hidden rounded-br-2xl shadow-lg ring-1 ring-forest/10 transition-transform hover:scale-[1.02] animate-fade-up"
+          className="absolute left-1 top-1 z-20 w-[180px] overflow-hidden rounded-br-2xl shadow-lg ring-1 ring-forest/10 transition-transform hover:scale-[1.02] animate-fade-up"
           style={{ aspectRatio: "16/9" }}
         >
           <div
