@@ -317,11 +317,12 @@ function ProductCard({
 
 function MapBackground() {
   return (
-    <div className="absolute inset-0">
+    <div className="absolute inset-0 overflow-hidden">
       <img
         src={romaniaHeroMap.url}
         alt="Hartă România"
-        className="absolute inset-0 h-full w-full object-contain object-top"
+        className="absolute inset-0 h-full w-full object-cover object-top"
+        style={{ transform: "scale(1.35) translateX(6%)", transformOrigin: "top center" }}
       />
     </div>
   );
