@@ -119,10 +119,21 @@ function Index() {
 
         {/* Product grid — 2x3, still inside hero */}
         <div className="animate-fade-up pb-10" style={{ animationDelay: "240ms" }}>
-          <div className="mb-3 flex items-baseline justify-between">
-            <h2 className="font-serif text-xl font-medium text-forest">
-              {"\n"}
-            </h2>
+          <div className="mb-3 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <h2 className="font-serif text-xl font-medium text-forest">
+                {"\n"}
+              </h2>
+              {/* Search — compact, above the products grid next to the count */}
+              <div className="flex items-center gap-1 rounded-full bg-card/95 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
+                <Search className="h-3 w-3 shrink-0 text-forest-soft" />
+                <input
+                  type="text"
+                  placeholder="Caută"
+                  className="w-10 bg-transparent text-[10px] text-forest placeholder:text-forest-soft/70 focus:outline-none sm:w-14"
+                />
+              </div>
+            </div>
             <span className="text-[11px] uppercase tracking-widest text-forest-soft">
               {products.length} produse
             </span>
@@ -143,17 +154,6 @@ function Index() {
                     onAdd={() => addToCart(p.id)}
                   />
                 ))}
-              </div>
-            </div>
-            {/* Search — much smaller, to the right of products */}
-            <div className="flex shrink-0 flex-col items-start pt-1">
-              <div className="flex items-center gap-1 rounded-full bg-card/95 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
-                <Search className="h-3 w-3 shrink-0 text-forest-soft" />
-                <input
-                  type="text"
-                  placeholder="Caută"
-                  className="w-10 bg-transparent text-[10px] text-forest placeholder:text-forest-soft/70 focus:outline-none sm:w-14"
-                />
               </div>
             </div>
           </div>
