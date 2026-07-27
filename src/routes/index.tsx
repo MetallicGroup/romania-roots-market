@@ -156,17 +156,6 @@ function Index() {
                 ))}
               </div>
             </div>
-            {/* Search — much smaller, to the right of products */}
-            <div className="flex shrink-0 flex-col items-start pt-1">
-              <div className="flex items-center gap-1 rounded-full bg-card/95 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
-                <Search className="h-3 w-3 shrink-0 text-forest-soft" />
-                <input
-                  type="text"
-                  placeholder="Caută"
-                  className="w-10 bg-transparent text-[10px] text-forest placeholder:text-forest-soft/70 focus:outline-none sm:w-14"
-                />
-              </div>
-            </div>
           </div>
           <div className="mt-5 flex justify-center">
             <button className="rounded-full border border-forest/20 bg-cream px-6 py-3 text-sm font-medium text-forest transition-all hover:border-forest/40 hover:shadow-md">
