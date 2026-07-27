@@ -261,9 +261,10 @@ function Index() {
                         key={i}
                         className="flex items-center gap-3 rounded-2xl border border-forest/10 bg-card p-3"
                       >
-                        <div
-                          className="h-12 w-12 shrink-0 rounded-xl"
-                          style={{ background: p.swatch }}
+                        <img
+                          src={p.image}
+                          alt={p.name}
+                          className="h-12 w-12 shrink-0 rounded-xl object-cover"
                         />
                         <div className="min-w-0 flex-1">
                           <p className="truncate font-serif text-sm text-forest">{p.name}</p>
