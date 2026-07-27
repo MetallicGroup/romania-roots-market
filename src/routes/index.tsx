@@ -50,7 +50,6 @@ function Index() {
   const [cart, setCart] = useState<string[]>([]);
   const [saved, setSaved] = useState<string[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
-  const [selectedWeights, setSelectedWeights] = useState<Record<string, string>>({});
 
   const addToCart = (id: string) => setCart((c) => [...c, id]);
   const toggleSave = (id: string) =>
