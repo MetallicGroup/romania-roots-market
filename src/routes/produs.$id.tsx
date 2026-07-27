@@ -43,7 +43,9 @@ function ProductPage() {
         </nav>
 
         <div className="grid gap-10 lg:grid-cols-2">
-          <div className="overflow-hidden rounded-3xl shadow-md" style={{ background: product.swatch, aspectRatio: "1/1" }} />
+          <div className="overflow-hidden rounded-3xl bg-cream shadow-md">
+            <img src={product.image} alt={product.name} width={1024} height={1024} className="aspect-square h-full w-full object-cover" />
+          </div>
 
           <div>
             <p className="flex items-center gap-1 text-xs uppercase tracking-[0.2em] text-terracotta">
