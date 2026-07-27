@@ -297,27 +297,27 @@ function ProductCard({
   onAdd: () => void;
 }) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-xl border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
+    <article className="group flex flex-col overflow-hidden rounded-lg border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
       <div className="relative aspect-square overflow-hidden" style={{ background: product.swatch }}>
         <button
           onClick={onSave}
           aria-label="Salvează"
-          className="absolute right-1.5 top-1.5 grid h-6 w-6 place-items-center rounded-full bg-cream/90 text-forest backdrop-blur transition-transform hover:scale-110"
+          className="absolute right-1 top-1 grid h-5 w-5 place-items-center rounded-full bg-cream/90 text-forest backdrop-blur transition-transform hover:scale-110"
         >
-          <Heart className={`h-3 w-3 ${isSaved ? "fill-terracotta text-terracotta" : ""}`} />
+          <Heart className={`h-2.5 w-2.5 ${isSaved ? "fill-terracotta text-terracotta" : ""}`} />
         </button>
-        <span className="absolute bottom-1.5 left-1.5 rounded-full bg-cream/90 px-1.5 py-0.5 text-[9px] font-medium text-forest backdrop-blur">
+        <span className="absolute bottom-1 left-1 rounded-full bg-cream/90 px-1 py-0.5 text-[8px] font-medium text-forest backdrop-blur">
           {product.region}
         </span>
       </div>
-      <div className="flex flex-1 flex-col gap-1 p-2">
-        <h3 className="font-serif text-[13px] leading-tight text-forest">{product.name}</h3>
-        <div className="flex flex-wrap gap-1">
-          {product.weights.map((w) => (
+      <div className="flex flex-1 flex-col gap-0.5 p-1.5">
+        <h3 className="font-serif text-[11px] leading-tight text-forest">{product.name}</h3>
+        <div className="flex flex-wrap gap-0.5">
+          {product.weights.slice(0, 2).map((w) => (
             <button
               key={w}
               onClick={() => onSelectWeight(w)}
-              className={`rounded-full px-1.5 py-0.5 text-[9px] font-medium transition-colors ${
+              className={`rounded-full px-1 py-0 text-[8px] font-medium transition-colors ${
                 selectedWeight === w
                   ? "bg-forest text-cream"
                   : "bg-forest/5 text-forest-soft hover:bg-forest/10"
@@ -327,18 +327,13 @@ function ProductCard({
             </button>
           ))}
         </div>
-        <div className="mt-0.5 flex items-baseline justify-between">
-          <span className="font-serif text-base font-medium text-forest">{product.price} <span className="text-[10px] text-forest-soft">lei</span></span>
-        </div>
-        <div className="mt-1 flex items-center gap-1">
+        <div className="mt-auto flex items-center justify-between pt-0.5">
+          <span className="font-serif text-sm font-medium text-forest leading-none">{product.price} <span className="text-[8px] text-forest-soft">lei</span></span>
           <button
             onClick={onAdd}
-            className="flex flex-1 items-center justify-center gap-0.5 rounded-full bg-honey py-1.5 text-[10px] font-semibold text-forest shadow-sm transition-transform hover:scale-[1.02]"
+            className="grid h-5 w-5 place-items-center rounded-full bg-honey text-forest shadow-sm transition-transform hover:scale-110"
           >
-            <Plus className="h-3 w-3" /> Coș
-          </button>
-          <button className="rounded-full border border-forest/15 px-2 py-1.5 text-[10px] font-medium text-forest transition-colors hover:bg-forest/5">
-            Det
+            <Plus className="h-2.5 w-2.5" />
           </button>
         </div>
       </div>
