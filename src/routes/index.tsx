@@ -331,7 +331,8 @@ function ProductCard({
 }) {
   return (
     <article className="group flex flex-col overflow-hidden rounded-lg border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
-      <div className="relative aspect-square overflow-hidden" style={{ background: product.swatch }}>
+      <div className="relative aspect-square overflow-hidden bg-cream">
+        <img src={product.image} alt={product.name} loading="lazy" width={256} height={256} className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105" />
         <button
           onClick={onSave}
           aria-label="Salvează"
