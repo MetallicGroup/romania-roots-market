@@ -33,7 +33,7 @@ function CategoryPage() {
         <p className="mt-2 max-w-xl text-forest-soft">{category.description}</p>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {items.map((p) => (
+          {items.map((p: import("@/lib/products").Product) => (
             <Link
               key={p.id}
               to="/produs/$id"

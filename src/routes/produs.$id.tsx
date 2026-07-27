@@ -57,7 +57,7 @@ function ProductPage() {
             <div className="mt-8">
               <p className="text-xs uppercase tracking-wider text-forest-soft">Gramaj</p>
               <div className="mt-2 flex flex-wrap gap-2">
-                {product.weights.map((w) => (
+                {product.weights.map((w: string) => (
                   <button
                     key={w}
                     onClick={() => setWeight(w)}
@@ -115,7 +115,7 @@ function ProductPage() {
               </Link>
             </div>
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {related.map((p) => (
+              {related.map((p: import("@/lib/products").Product) => (
                 <Link
                   key={p.id}
                   to="/produs/$id"
