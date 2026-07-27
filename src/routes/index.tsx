@@ -117,52 +117,52 @@ function Index() {
             </p>
           </div>
 
-          {/* Search — pill shape */}
-          <div className="animate-fade-up" style={{ animationDelay: "160ms" }}>
-            <div className="flex items-center gap-2 rounded-full bg-card/95 pl-5 pr-1.5 py-1.5 shadow-lg ring-1 ring-forest/10 backdrop-blur">
-              <Search className="h-4 w-4 shrink-0 text-forest-soft" />
-              <input
-                type="text"
-                placeholder="Caută produse, producători, regiuni…"
-                className="min-w-0 flex-1 bg-transparent py-2 text-sm text-forest placeholder:text-forest-soft/70 focus:outline-none"
-              />
-              <button className="shrink-0 rounded-full bg-forest px-4 py-2 text-xs font-medium text-cream transition-colors hover:bg-forest/90 sm:text-sm">
-                Caută
-              </button>
-            </div>
+        {/* Product grid — 2x3, still inside hero */}
+        <div className="animate-fade-up pb-10" style={{ animationDelay: "240ms" }}>
+          <div className="mb-3 flex items-baseline justify-between">
+            <h2 className="font-serif text-xl font-medium text-forest">
+              Culese astăzi
+            </h2>
+            <span className="text-[11px] uppercase tracking-widest text-forest-soft">
+              {products.length} produse
+            </span>
           </div>
-
-          {/* Product grid — 2x3, still inside hero */}
-          <div className="animate-fade-up pb-10" style={{ animationDelay: "240ms" }}>
-            <div className="mb-3 flex items-baseline justify-between">
-              <h2 className="font-serif text-xl font-medium text-forest">
-                Culese astăzi
-              </h2>
-              <span className="text-[11px] uppercase tracking-widest text-forest-soft">
-                {products.length} produse
-              </span>
+          <div className="flex flex-row gap-3">
+            <div className="flex-1">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {products.map((p) => (
+                  <ProductCard
+                    key={p.id}
+                    product={p}
+                    selectedWeight={selectedWeights[p.id] ?? p.weights[0]}
+                    onSelectWeight={(w) =>
+                      setSelectedWeights((s) => ({ ...s, [p.id]: w }))
+                    }
+                    isSaved={saved.includes(p.id)}
+                    onSave={() => toggleSave(p.id)}
+                    onAdd={() => addToCart(p.id)}
+                  />
+                ))}
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-              {products.map((p) => (
-                <ProductCard
-                  key={p.id}
-                  product={p}
-                  selectedWeight={selectedWeights[p.id] ?? p.weights[0]}
-                  onSelectWeight={(w) =>
-                    setSelectedWeights((s) => ({ ...s, [p.id]: w }))
-                  }
-                  isSaved={saved.includes(p.id)}
-                  onSave={() => toggleSave(p.id)}
-                  onAdd={() => addToCart(p.id)}
+            {/* Search — much smaller, to the right of products */}
+            <div className="flex shrink-0 flex-col items-start pt-1">
+              <div className="flex items-center gap-1 rounded-full bg-card/95 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
+                <Search className="h-3 w-3 shrink-0 text-forest-soft" />
+                <input
+                  type="text"
+                  placeholder="Caută"
+                  className="w-10 bg-transparent text-[10px] text-forest placeholder:text-forest-soft/70 focus:outline-none sm:w-14"
                 />
-              ))}
-            </div>
-            <div className="mt-5 flex justify-center">
-              <button className="rounded-full border border-forest/20 bg-cream px-6 py-3 text-sm font-medium text-forest transition-all hover:border-forest/40 hover:shadow-md">
-                Vezi toate produsele →
-              </button>
+              </div>
             </div>
           </div>
+          <div className="mt-5 flex justify-center">
+            <button className="rounded-full border border-forest/20 bg-cream px-6 py-3 text-sm font-medium text-forest transition-all hover:border-forest/40 hover:shadow-md">
+              Vezi toate produsele →
+            </button>
+          </div>
+        </div>
         </div>
       </section>
 
