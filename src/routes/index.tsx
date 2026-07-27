@@ -50,7 +50,6 @@ function Index() {
   const [cart, setCart] = useState<string[]>([]);
   const [saved, setSaved] = useState<string[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
-  const [selectedWeights, setSelectedWeights] = useState<Record<string, string>>({});
 
   const addToCart = (id: string) => setCart((c) => [...c, id]);
   const toggleSave = (id: string) =>
@@ -123,10 +122,6 @@ function Index() {
               <ProductCard
                 key={p.id}
                 product={p}
-                selectedWeight={selectedWeights[p.id] ?? p.weights[0]}
-                onSelectWeight={(w) =>
-                  setSelectedWeights((s) => ({ ...s, [p.id]: w }))
-                }
                 isSaved={saved.includes(p.id)}
                 onSave={() => toggleSave(p.id)}
                 onAdd={() => addToCart(p.id)}
@@ -254,15 +249,11 @@ function IconBtn({
 
 function ProductCard({
   product,
-  selectedWeight,
-  onSelectWeight,
   isSaved,
   onSave,
   onAdd,
 }: {
   product: Product;
-  selectedWeight: string;
-  onSelectWeight: (w: string) => void;
   isSaved: boolean;
   onSave: () => void;
   onAdd: () => void;
@@ -281,25 +272,9 @@ function ProductCard({
           {product.region}
         </span>
       </div>
-      <div className="flex flex-1 flex-col gap-0.5 p-1.5">
+      <div className="flex flex-1 flex-col justify-between p-1.5">
         <h3 className="font-serif text-[11px] leading-tight text-forest">{product.name}</h3>
-        <div className="flex flex-wrap gap-0.5">
-          {product.weights.slice(0, 2).map((w) => (
-            <button
-              key={w}
-              onClick={() => onSelectWeight(w)}
-              className={`rounded-full px-1 py-0 text-[8px] font-medium transition-colors ${
-                selectedWeight === w
-                  ? "bg-forest text-cream"
-                  : "bg-forest/5 text-forest-soft hover:bg-forest/10"
-              }`}
-            >
-              {w}
-            </button>
-          ))}
-        </div>
-        <div className="mt-auto flex items-center justify-between pt-0.5">
-          <span className="font-serif text-sm font-medium text-forest leading-none">{product.price} <span className="text-[8px] text-forest-soft">lei</span></span>
+        <div className="flex items-center justify-end pt-0.5">
           <button
             onClick={onAdd}
             className="grid h-5 w-5 place-items-center rounded-full bg-honey text-forest shadow-sm transition-transform hover:scale-110"
