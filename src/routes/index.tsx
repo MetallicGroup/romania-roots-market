@@ -266,22 +266,22 @@ function ProductCard({
         <button
           onClick={onSave}
           aria-label="Salvează"
-          className="absolute right-1 top-1 grid h-5 w-5 place-items-center rounded-full bg-cream/90 text-forest backdrop-blur transition-transform hover:scale-110"
+          className="absolute right-1 top-1 grid h-4 w-4 place-items-center rounded-full bg-cream/90 text-forest backdrop-blur transition-transform hover:scale-110"
         >
-          <Heart className={`h-2.5 w-2.5 ${isSaved ? "fill-terracotta text-terracotta" : ""}`} />
+          <Heart className={`h-2 w-2 ${isSaved ? "fill-terracotta text-terracotta" : ""}`} />
         </button>
-        <span className="absolute bottom-1 left-1 rounded-full bg-cream/90 px-1 py-0.5 text-[8px] font-medium text-forest backdrop-blur">
+        <span className="absolute bottom-1 left-1 rounded-full bg-cream/90 px-1 py-0.5 text-[7px] font-medium text-forest backdrop-blur">
           {product.region}
         </span>
       </div>
-      <div className="flex flex-1 flex-col justify-between p-1.5">
-        <h3 className="font-serif text-[11px] leading-tight text-forest">{product.name}</h3>
+      <div className="flex flex-1 flex-col justify-between p-1">
+        <h3 className="font-serif text-[10px] leading-tight text-forest">{product.name}</h3>
         <div className="flex items-center justify-end pt-0.5">
           <button
             onClick={onAdd}
-            className="grid h-5 w-5 place-items-center rounded-full bg-honey text-forest shadow-sm transition-transform hover:scale-110"
+            className="grid h-4 w-4 place-items-center rounded-full bg-honey text-forest shadow-sm transition-transform hover:scale-110"
           >
-            <Plus className="h-2.5 w-2.5" />
+            <Plus className="h-2 w-2" />
           </button>
         </div>
       </div>
