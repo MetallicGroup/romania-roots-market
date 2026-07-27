@@ -60,15 +60,8 @@ function Index() {
     <div className="min-h-screen bg-background text-foreground">
       {/* HERO — vertical, full viewport height */}
       <section className="relative min-h-screen w-full overflow-hidden">
-        {/* Satellite map background */}
-        <img
-          src={romaniaHeroMap.url}
-          alt="Hartă România"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-
-        {/* Warm overlay so text stays legible */}
-        <div className="absolute inset-0 bg-gradient-to-b from-cream/60 via-cream/30 to-cream/95 pointer-events-none" />
+        {/* Map background */}
+        <MapBackground />
 
         {/* Header */}
         <header className="relative z-20 flex items-center justify-between px-5 pt-5 sm:px-8">
