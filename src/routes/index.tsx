@@ -109,12 +109,12 @@ function Index() {
         <div className="absolute inset-x-0 bottom-0 z-10 px-1 pb-3">
           <div className="mx-auto max-w-3xl">
             <div className="mb-3 flex items-center justify-end px-2">
-              <div className="flex items-center gap-1 rounded-full bg-card/90 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
+              <div className="flex w-1/3 items-center gap-1 rounded-full bg-card/90 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
                 <Search className="h-3 w-3 shrink-0 text-forest-soft" />
                 <input
                   type="text"
                   placeholder="Caută"
-                  className="w-10 bg-transparent text-[10px] text-forest placeholder:text-forest-soft/70 focus:outline-none sm:w-14"
+                  className="min-w-0 flex-1 bg-transparent text-[10px] text-forest placeholder:text-forest-soft/70 focus:outline-none"
                 />
               </div>
             </div>
