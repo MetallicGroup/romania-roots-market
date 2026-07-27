@@ -59,7 +59,7 @@ function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* HERO — vertical, full viewport height */}
-      <section className="relative min-h-screen w-full overflow-hidden">
+      <section className="relative min-h-[110vh] w-full overflow-hidden">
         {/* Map background */}
         <MapBackground />
 
@@ -108,7 +108,7 @@ function Index() {
         </div>
 
         {/* Products — positioned over the Bulgaria area (bottom of the map) */}
-        <div className="absolute inset-x-0 bottom-0 z-10 px-5 pb-6 sm:px-8">
+        <div className="absolute inset-x-0 bottom-0 z-10 px-5 pb-3 sm:px-8">
           <div className="mx-auto max-w-5xl">
             <div className="mb-3 flex items-center justify-between">
               <div className="flex items-center gap-1 rounded-full bg-card/90 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
