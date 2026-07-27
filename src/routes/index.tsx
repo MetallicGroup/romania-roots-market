@@ -133,6 +133,91 @@ function Index() {
         </div>
       </section>
 
+      {/* Categorii */}
+      <section className="bg-cream px-4 py-16">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex items-end justify-between">
+            <div>
+              <h2 className="font-serif text-3xl text-forest md:text-4xl">Categorii</h2>
+              <p className="mt-2 text-sm text-forest-soft">Bunătățile satului, împărțite după tradiție.</p>
+            </div>
+            <Link to="/categorii" className="text-sm text-terracotta hover:underline">Vezi toate →</Link>
+          </div>
+          <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+            {categories.map((c) => {
+              const sample = catalog.find((p) => p.category === c.slug);
+              return (
+                <Link
+                  key={c.slug}
+                  to="/categorie/$slug"
+                  params={{ slug: c.slug }}
+                  className="group overflow-hidden rounded-2xl border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
+                >
+                  <div className="aspect-square" style={{ background: sample?.swatch ?? "linear-gradient(160deg,#eab24a,#a86b12)" }} />
+                  <div className="p-3">
+                    <h3 className="font-serif text-base text-forest">{c.name}</h3>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Produse populare */}
+      <section className="bg-cream px-4 pb-16">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex items-end justify-between">
+            <div>
+              <h2 className="font-serif text-3xl text-forest md:text-4xl">Produse populare</h2>
+              <p className="mt-2 text-sm text-forest-soft">Alese cu grijă de la producători mici.</p>
+            </div>
+          </div>
+          <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+            {catalog.slice(0, 8).map((p) => (
+              <Link
+                key={p.id}
+                to="/produs/$id"
+                params={{ id: p.id }}
+                className="group overflow-hidden rounded-2xl border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
+              >
+                <div className="aspect-square" style={{ background: p.swatch }} />
+                <div className="p-4">
+                  <p className="text-xs text-forest-soft">{p.region}</p>
+                  <h3 className="mt-1 font-serif text-base text-forest">{p.name}</h3>
+                  <p className="mt-2 text-sm font-medium text-forest">{p.price} lei</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Despre */}
+      <section className="bg-forest px-4 py-20 text-cream">
+        <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2 md:items-center">
+          <div>
+            <p className="text-sm uppercase tracking-widest text-honey">Despre noi</p>
+            <h2 className="mt-3 font-serif text-3xl md:text-4xl">Gustul satului, adus la tine acasă.</h2>
+            <p className="mt-4 text-cream/80">
+              Lucrăm direct cu familii de producători din toată România. Miere culesă în livezi, dulcețuri fierte la ceaun, brânzeturi din stânele muntelui — totul cu poveste și cu nume.
+            </p>
+            <Link to="/despre" className="mt-6 inline-block rounded-full bg-honey px-6 py-3 font-medium text-forest transition-transform hover:scale-[1.02]">
+              Povestea noastră
+            </Link>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            <Stat n="40+" l="Producători" />
+            <Stat n="12" l="Regiuni" />
+            <Stat n="100%" l="Natural" />
+          </div>
+        </div>
+      </section>
+
+      <SiteFooter />
+
+
+
 
       {/* Video modal */}
       {videoOpen && (
