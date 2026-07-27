@@ -105,28 +105,30 @@ function Index() {
           </div>
         </header>
 
-        {/* Products — positioned over the Bulgaria area, full width edge-to-edge */}
+        {/* Products — positioned over the Bulgaria area, compact strip */}
         <div className="absolute inset-x-0 bottom-0 z-10 px-1 pb-3">
-          <div className="mb-3 flex items-center justify-end px-2">
-            <div className="flex items-center gap-1 rounded-full bg-card/90 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
-              <Search className="h-3 w-3 shrink-0 text-forest-soft" />
-              <input
-                type="text"
-                placeholder="Caută"
-                className="w-10 bg-transparent text-[10px] text-forest placeholder:text-forest-soft/70 focus:outline-none sm:w-14"
-              />
+          <div className="mx-auto max-w-3xl">
+            <div className="mb-3 flex items-center justify-end px-2">
+              <div className="flex items-center gap-1 rounded-full bg-card/90 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
+                <Search className="h-3 w-3 shrink-0 text-forest-soft" />
+                <input
+                  type="text"
+                  placeholder="Caută"
+                  className="w-10 bg-transparent text-[10px] text-forest placeholder:text-forest-soft/70 focus:outline-none sm:w-14"
+                />
+              </div>
             </div>
-          </div>
-          <div className="grid grid-cols-3 gap-[2px]">
-            {products.map((p) => (
-              <ProductCard
-                key={p.id}
-                product={p}
-                isSaved={saved.includes(p.id)}
-                onSave={() => toggleSave(p.id)}
-                onAdd={() => addToCart(p.id)}
-              />
-            ))}
+            <div className="grid grid-cols-3 gap-[2px]">
+              {products.map((p) => (
+                <ProductCard
+                  key={p.id}
+                  product={p}
+                  isSaved={saved.includes(p.id)}
+                  onSave={() => toggleSave(p.id)}
+                  onAdd={() => addToCart(p.id)}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
