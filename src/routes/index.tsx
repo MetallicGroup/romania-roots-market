@@ -88,7 +88,7 @@ function Index() {
         </button>
 
         {/* Header */}
-        <header className="relative z-20 flex items-start justify-end px-5 pt-5 sm:px-8">
+        <header className="relative z-20 flex items-start justify-end px-1 pt-1 sm:px-2">
           <div className="flex flex-col items-end gap-2">
             <nav className="flex items-center gap-1.5">
               <IconBtn label="Categorii"><Menu className="h-[18px] w-[18px]" /></IconBtn>
