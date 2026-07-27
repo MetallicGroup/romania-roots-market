@@ -132,7 +132,9 @@ function Index() {
                   params={{ slug: c.slug }}
                   className="group overflow-hidden rounded-2xl border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
                 >
-                  <div className="aspect-square" style={{ background: sample?.swatch ?? "linear-gradient(160deg,#eab24a,#a86b12)" }} />
+                  <div className="aspect-square overflow-hidden bg-cream">
+                    {sample && <img src={sample.image} alt={c.name} loading="lazy" width={512} height={512} className="h-full w-full object-cover transition-transform group-hover:scale-105" />}
+                  </div>
                   <div className="p-3">
                     <h3 className="font-serif text-base text-forest">{c.name}</h3>
                   </div>
