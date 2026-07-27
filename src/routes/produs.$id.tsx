@@ -43,7 +43,9 @@ function ProductPage() {
         </nav>
 
         <div className="grid gap-10 lg:grid-cols-2">
-          <div className="overflow-hidden rounded-3xl shadow-md" style={{ background: product.swatch, aspectRatio: "1/1" }} />
+          <div className="overflow-hidden rounded-3xl bg-cream shadow-md">
+            <img src={product.image} alt={product.name} width={1024} height={1024} className="aspect-square h-full w-full object-cover" />
+          </div>
 
           <div>
             <p className="flex items-center gap-1 text-xs uppercase tracking-[0.2em] text-terracotta">
@@ -122,7 +124,9 @@ function ProductPage() {
                   params={{ id: p.id }}
                   className="group overflow-hidden rounded-2xl border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
                 >
-                  <div className="aspect-square" style={{ background: p.swatch }} />
+                  <div className="aspect-square overflow-hidden bg-cream">
+                    <img src={p.image} alt={p.name} loading="lazy" width={512} height={512} className="h-full w-full object-cover transition-transform group-hover:scale-105" />
+                  </div>
                   <div className="p-4">
                     <p className="text-[10px] uppercase tracking-wider text-forest-soft">{p.region}</p>
                     <h3 className="mt-1 font-serif text-lg text-forest">{p.name}</h3>

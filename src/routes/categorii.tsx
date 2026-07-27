@@ -33,7 +33,9 @@ function CategoriiPage() {
                 params={{ slug: c.slug }}
                 className="group overflow-hidden rounded-2xl border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
               >
-                <div className="aspect-[4/3]" style={{ background: sample?.swatch ?? "linear-gradient(160deg,#eab24a,#a86b12)" }} />
+                <div className="aspect-[4/3] overflow-hidden bg-cream">
+                  {sample && <img src={sample.image} alt={c.name} loading="lazy" width={512} height={384} className="h-full w-full object-cover transition-transform group-hover:scale-105" />}
+                </div>
                 <div className="p-5">
                   <div className="flex items-baseline justify-between">
                     <h2 className="font-serif text-2xl text-forest">{c.name}</h2>

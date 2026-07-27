@@ -19,33 +19,10 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-type Product = {
-  id: string;
-  name: string;
-  region: string;
-  weights: string[];
-  price: number;
-  swatch: string;
-};
+type Product = (typeof catalog)[number];
 
-const products: Product[] = [
-  { id: "1", name: "Miere de salcâm", region: "Bihor", weights: ["250g", "500g", "1kg"], price: 42, swatch: "linear-gradient(160deg,#f5c150,#c78118)" },
-  { id: "2", name: "Miere de tei", region: "Argeș", weights: ["250g", "500g"], price: 38, swatch: "linear-gradient(160deg,#e6a94a,#8a5a1a)" },
-  { id: "3", name: "Dulceață de afine", region: "Bucovina", weights: ["220g", "400g"], price: 32, swatch: "linear-gradient(160deg,#5a3a7a,#241436)" },
-  { id: "4", name: "Miere poliflora", region: "Maramureș", weights: ["500g", "1kg"], price: 45, swatch: "linear-gradient(160deg,#eab24a,#a86b12)" },
-  { id: "5", name: "Dulceață de trandafiri", region: "Dobrogea", weights: ["220g"], price: 36, swatch: "linear-gradient(160deg,#e78ba5,#9a3a55)" },
-  { id: "6", name: "Zacuscă de casă", region: "Moldova", weights: ["300g", "500g"], price: 28, swatch: "linear-gradient(160deg,#c05c2a,#5a2010)" },
-];
+const products: Product[] = catalog.slice(0, 6);
 
-const regions = [
-  { name: "Maramureș", x: 32, y: 22 },
-  { name: "Bucovina", x: 55, y: 20 },
-  { name: "Transilvania", x: 38, y: 40 },
-  { name: "Moldova", x: 68, y: 38 },
-  { name: "Muntenia", x: 50, y: 62 },
-  { name: "Dobrogea", x: 78, y: 60 },
-  { name: "Banat", x: 18, y: 52 },
-];
 
 function Index() {
   const [videoOpen, setVideoOpen] = useState(false);
@@ -155,7 +132,9 @@ function Index() {
                   params={{ slug: c.slug }}
                   className="group overflow-hidden rounded-2xl border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
                 >
-                  <div className="aspect-square" style={{ background: sample?.swatch ?? "linear-gradient(160deg,#eab24a,#a86b12)" }} />
+                  <div className="aspect-square overflow-hidden bg-cream">
+                    {sample && <img src={sample.image} alt={c.name} loading="lazy" width={512} height={512} className="h-full w-full object-cover transition-transform group-hover:scale-105" />}
+                  </div>
                   <div className="p-3">
                     <h3 className="font-serif text-base text-forest">{c.name}</h3>
                   </div>
@@ -183,7 +162,9 @@ function Index() {
                 params={{ id: p.id }}
                 className="group overflow-hidden rounded-2xl border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
               >
-                <div className="aspect-square" style={{ background: p.swatch }} />
+                <div className="aspect-square overflow-hidden bg-cream">
+                  <img src={p.image} alt={p.name} loading="lazy" width={512} height={512} className="h-full w-full object-cover transition-transform group-hover:scale-105" />
+                </div>
                 <div className="p-4">
                   <p className="text-xs text-forest-soft">{p.region}</p>
                   <h3 className="mt-1 font-serif text-base text-forest">{p.name}</h3>
@@ -280,9 +261,10 @@ function Index() {
                         key={i}
                         className="flex items-center gap-3 rounded-2xl border border-forest/10 bg-card p-3"
                       >
-                        <div
-                          className="h-12 w-12 shrink-0 rounded-xl"
-                          style={{ background: p.swatch }}
+                        <img
+                          src={p.image}
+                          alt={p.name}
+                          className="h-12 w-12 shrink-0 rounded-xl object-cover"
                         />
                         <div className="min-w-0 flex-1">
                           <p className="truncate font-serif text-sm text-forest">{p.name}</p>
@@ -349,7 +331,8 @@ function ProductCard({
 }) {
   return (
     <article className="group flex flex-col overflow-hidden rounded-lg border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
-      <div className="relative aspect-square overflow-hidden" style={{ background: product.swatch }}>
+      <div className="relative aspect-square overflow-hidden bg-cream">
+        <img src={product.image} alt={product.name} loading="lazy" width={256} height={256} className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105" />
         <button
           onClick={onSave}
           aria-label="Salvează"
