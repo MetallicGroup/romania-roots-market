@@ -349,57 +349,19 @@ function ProductCard({
 function MapBackground() {
   return (
     <div className="absolute inset-0">
-      {/* Background wash */}
-      <div className="absolute inset-0 bg-gradient-to-b from-honey-soft/40 via-cream to-cream" />
-
-      <svg
-        viewBox="0 0 100 100"
-        preserveAspectRatio="xMidYMid meet"
-        className="absolute inset-0 h-full w-full opacity-70"
-        aria-hidden="true"
-      >
-        {/* Stylized Romania outline — abstract line-art */}
-        <path
-          d="M18,40 L14,52 L20,62 L26,70 L38,78 L52,80 L64,76 L74,72 L82,66 L86,58 L82,50 L78,42 L82,34 L78,26 L70,20 L58,18 L46,20 L36,22 L28,28 Z"
-          fill="none"
-          stroke="var(--forest)"
-          strokeWidth="0.4"
-          strokeLinejoin="round"
-          opacity="0.35"
-        />
-        <path
-          d="M18,40 L14,52 L20,62 L26,70 L38,78 L52,80 L64,76 L74,72 L82,66 L86,58 L82,50 L78,42 L82,34 L78,26 L70,20 L58,18 L46,20 L36,22 L28,28 Z"
-          fill="var(--forest)"
-          opacity="0.05"
-        />
-        {/* Carpathian arc — inner curve */}
-        <path
-          d="M32,32 Q48,44 60,38 T78,44"
-          fill="none"
-          stroke="var(--honey)"
-          strokeWidth="0.3"
-          strokeDasharray="1 1.5"
-          opacity="0.6"
-        />
-        {/* Region pins */}
-        {regions.map((r, i) => (
-          <g
-            key={r.name}
-            className="animate-pin"
-            style={{ animationDelay: `${i * 0.35}s`, transformBox: "fill-box" }}
-          >
-            <circle cx={r.x} cy={r.y} r="1.6" fill="var(--terracotta)" opacity="0.35" />
-            <circle cx={r.x} cy={r.y} r="0.7" fill="var(--terracotta)" />
-          </g>
-        ))}
-      </svg>
+      <img
+        src={romaniaHeroMap.url}
+        alt="Hartă România"
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-cream/50 via-cream/20 to-cream/95" />
 
       {/* Region labels — HTML for crisp typography */}
       <div className="absolute inset-0 pointer-events-none">
         {regions.map((r) => (
           <span
             key={r.name}
-            className="absolute -translate-x-1/2 translate-y-2 whitespace-nowrap font-serif text-[9px] tracking-wide text-forest/50 sm:text-[10px]"
+            className="absolute -translate-x-1/2 translate-y-2 whitespace-nowrap font-serif text-[9px] tracking-wide text-forest/70 sm:text-[10px]"
             style={{ left: `${r.x}%`, top: `${r.y}%` }}
           >
             <MapPin className="mr-0.5 inline h-2 w-2 text-terracotta" />
