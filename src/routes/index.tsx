@@ -114,16 +114,19 @@ function Index() {
               {"\n"}
             </p>
           </div>
+        </div>
+      </section>
 
-        {/* Product grid — 2x3, still inside hero */}
-        <div className="animate-fade-up pb-10" style={{ animationDelay: "240ms" }}>
-          <div className="mb-3 flex items-center justify-between">
+      {/* Products section — below the hero so the map stays visible */}
+      <section className="relative z-20 -mt-16 rounded-t-[2rem] bg-cream px-5 pb-10 pt-8 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] sm:px-8">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <h2 className="font-serif text-xl font-medium text-forest">
                 {"\n"}
               </h2>
               {/* Search — compact, above the products grid next to the count */}
-              <div className="flex items-center gap-1 rounded-full bg-card/95 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
+              <div className="flex items-center gap-1 rounded-full bg-card px-2 py-1.5 shadow-md ring-1 ring-forest/10">
                 <Search className="h-3 w-3 shrink-0 text-forest-soft" />
                 <input
                   type="text"
@@ -136,31 +139,26 @@ function Index() {
               {products.length} produse
             </span>
           </div>
-          <div className="flex flex-row gap-3">
-            <div className="flex-1">
-              <div className="grid grid-cols-3 gap-2 sm:gap-3">
-                {products.map((p) => (
-                  <ProductCard
-                    key={p.id}
-                    product={p}
-                    selectedWeight={selectedWeights[p.id] ?? p.weights[0]}
-                    onSelectWeight={(w) =>
-                      setSelectedWeights((s) => ({ ...s, [p.id]: w }))
-                    }
-                    isSaved={saved.includes(p.id)}
-                    onSave={() => toggleSave(p.id)}
-                    onAdd={() => addToCart(p.id)}
-                  />
-                ))}
-              </div>
-            </div>
+          <div className="grid grid-cols-3 gap-2 sm:gap-3">
+            {products.map((p) => (
+              <ProductCard
+                key={p.id}
+                product={p}
+                selectedWeight={selectedWeights[p.id] ?? p.weights[0]}
+                onSelectWeight={(w) =>
+                  setSelectedWeights((s) => ({ ...s, [p.id]: w }))
+                }
+                isSaved={saved.includes(p.id)}
+                onSave={() => toggleSave(p.id)}
+                onAdd={() => addToCart(p.id)}
+              />
+            ))}
           </div>
           <div className="mt-5 flex justify-center">
-            <button className="rounded-full border border-forest/20 bg-cream px-6 py-3 text-sm font-medium text-forest transition-all hover:border-forest/40 hover:shadow-md">
+            <button className="rounded-full border border-forest/20 bg-card px-6 py-3 text-sm font-medium text-forest transition-all hover:border-forest/40 hover:shadow-md">
               Vezi toate produsele →
             </button>
           </div>
-        </div>
         </div>
       </section>
 
