@@ -1,4 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { products as catalog, categories } from "@/lib/products";
+import { SiteFooter } from "@/components/site-header";
 import { useState } from "react";
 import {
   Search,
