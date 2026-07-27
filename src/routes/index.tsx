@@ -122,10 +122,6 @@ function Index() {
               <ProductCard
                 key={p.id}
                 product={p}
-                selectedWeight={selectedWeights[p.id] ?? p.weights[0]}
-                onSelectWeight={(w) =>
-                  setSelectedWeights((s) => ({ ...s, [p.id]: w }))
-                }
                 isSaved={saved.includes(p.id)}
                 onSave={() => toggleSave(p.id)}
                 onAdd={() => addToCart(p.id)}
