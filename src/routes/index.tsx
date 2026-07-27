@@ -105,28 +105,30 @@ function Index() {
           </div>
         </header>
 
-        {/* Products — positioned over the Bulgaria area, full width edge-to-edge */}
+        {/* Products — positioned over the Bulgaria area, compact strip */}
         <div className="absolute inset-x-0 bottom-0 z-10 px-1 pb-3">
-          <div className="mb-3 flex items-center justify-end px-2">
-            <div className="flex items-center gap-1 rounded-full bg-card/90 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
-              <Search className="h-3 w-3 shrink-0 text-forest-soft" />
-              <input
-                type="text"
-                placeholder="Caută"
-                className="w-10 bg-transparent text-[10px] text-forest placeholder:text-forest-soft/70 focus:outline-none sm:w-14"
-              />
+          <div className="mx-auto max-w-3xl">
+            <div className="mb-3 flex items-center justify-end px-2">
+              <div className="flex items-center gap-1 rounded-full bg-card/90 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
+                <Search className="h-3 w-3 shrink-0 text-forest-soft" />
+                <input
+                  type="text"
+                  placeholder="Caută"
+                  className="w-10 bg-transparent text-[10px] text-forest placeholder:text-forest-soft/70 focus:outline-none sm:w-14"
+                />
+              </div>
             </div>
-          </div>
-          <div className="grid grid-cols-3 gap-[2px]">
-            {products.map((p) => (
-              <ProductCard
-                key={p.id}
-                product={p}
-                isSaved={saved.includes(p.id)}
-                onSave={() => toggleSave(p.id)}
-                onAdd={() => addToCart(p.id)}
-              />
-            ))}
+            <div className="grid grid-cols-3 gap-[2px]">
+              {products.map((p) => (
+                <ProductCard
+                  key={p.id}
+                  product={p}
+                  isSaved={saved.includes(p.id)}
+                  onSave={() => toggleSave(p.id)}
+                  onAdd={() => addToCart(p.id)}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -264,22 +266,22 @@ function ProductCard({
         <button
           onClick={onSave}
           aria-label="Salvează"
-          className="absolute right-1 top-1 grid h-5 w-5 place-items-center rounded-full bg-cream/90 text-forest backdrop-blur transition-transform hover:scale-110"
+          className="absolute right-1 top-1 grid h-4 w-4 place-items-center rounded-full bg-cream/90 text-forest backdrop-blur transition-transform hover:scale-110"
         >
-          <Heart className={`h-2.5 w-2.5 ${isSaved ? "fill-terracotta text-terracotta" : ""}`} />
+          <Heart className={`h-2 w-2 ${isSaved ? "fill-terracotta text-terracotta" : ""}`} />
         </button>
-        <span className="absolute bottom-1 left-1 rounded-full bg-cream/90 px-1 py-0.5 text-[8px] font-medium text-forest backdrop-blur">
+        <span className="absolute bottom-1 left-1 rounded-full bg-cream/90 px-1 py-0.5 text-[7px] font-medium text-forest backdrop-blur">
           {product.region}
         </span>
       </div>
-      <div className="flex flex-1 flex-col justify-between p-1.5">
-        <h3 className="font-serif text-[11px] leading-tight text-forest">{product.name}</h3>
+      <div className="flex flex-1 flex-col justify-between p-1">
+        <h3 className="font-serif text-[10px] leading-tight text-forest">{product.name}</h3>
         <div className="flex items-center justify-end pt-0.5">
           <button
             onClick={onAdd}
-            className="grid h-5 w-5 place-items-center rounded-full bg-honey text-forest shadow-sm transition-transform hover:scale-110"
+            className="grid h-4 w-4 place-items-center rounded-full bg-honey text-forest shadow-sm transition-transform hover:scale-110"
           >
-            <Plus className="h-2.5 w-2.5" />
+            <Plus className="h-2 w-2" />
           </button>
         </div>
       </div>
