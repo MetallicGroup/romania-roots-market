@@ -121,7 +121,7 @@ function Index() {
         <div className="animate-fade-up pb-10" style={{ animationDelay: "240ms" }}>
           <div className="mb-3 flex items-baseline justify-between">
             <h2 className="font-serif text-xl font-medium text-forest">
-              Culese astăzi
+              {"\n"}
             </h2>
             <span className="text-[11px] uppercase tracking-widest text-forest-soft">
               {products.length} produse
