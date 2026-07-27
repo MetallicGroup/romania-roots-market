@@ -326,21 +326,7 @@ function MapBackground() {
         alt="Hartă România"
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-cream/50 via-cream/20 to-cream/95" />
-
-      {/* Region labels — HTML for crisp typography */}
-      <div className="absolute inset-0 pointer-events-none">
-        {regions.map((r) => (
-          <span
-            key={r.name}
-            className="absolute -translate-x-1/2 translate-y-2 whitespace-nowrap font-serif text-[9px] tracking-wide text-forest/70 sm:text-[10px]"
-            style={{ left: `${r.x}%`, top: `${r.y}%` }}
-          >
-            <MapPin className="mr-0.5 inline h-2 w-2 text-terracotta" />
-            {r.name}
-          </span>
-        ))}
-      </div>
     </div>
   );
 }
+
