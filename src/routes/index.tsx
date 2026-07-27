@@ -162,7 +162,9 @@ function Index() {
                 params={{ id: p.id }}
                 className="group overflow-hidden rounded-2xl border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
               >
-                <div className="aspect-square" style={{ background: p.swatch }} />
+                <div className="aspect-square overflow-hidden bg-cream">
+                  <img src={p.image} alt={p.name} loading="lazy" width={512} height={512} className="h-full w-full object-cover transition-transform group-hover:scale-105" />
+                </div>
                 <div className="p-4">
                   <p className="text-xs text-forest-soft">{p.region}</p>
                   <h3 className="mt-1 font-serif text-base text-forest">{p.name}</h3>
