@@ -11,6 +11,7 @@ import {
   Plus,
   MapPin,
 } from "lucide-react";
+import romaniaHeroMap from "@/assets/romania-hero-map.webp.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
