@@ -118,7 +118,7 @@ function Index() {
       </section>
 
       {/* Products section — below the hero so the map stays visible */}
-      <section className="relative z-20 -mt-16 rounded-t-[2rem] bg-cream px-5 pb-10 pt-8 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] sm:px-8">
+      <section className="relative z-20 bg-cream px-5 pb-10 pt-8 sm:px-8">
         <div className="mx-auto max-w-5xl">
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
