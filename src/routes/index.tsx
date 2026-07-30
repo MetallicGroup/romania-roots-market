@@ -198,6 +198,7 @@ function Index() {
                 <div className="p-4">
                   <p className="text-xs text-forest-soft">{p.region}</p>
                   <h3 className="mt-1 font-serif text-base text-forest">{p.name}</h3>
+                  <p className="mt-1 text-xs text-forest-soft">Vândut de {p.producer}</p>
                   <p className="mt-2 text-sm font-medium text-forest">{p.price} lei</p>
                 </div>
               </Link>
