@@ -92,13 +92,20 @@ function Index() {
                 <Search className="h-3 w-3 shrink-0 text-forest-soft" />
                 <input
                   type="text"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
                   placeholder="Caută"
                   className="min-w-0 flex-1 bg-transparent text-[10px] text-forest placeholder:text-forest-soft/70 focus:outline-none"
                 />
+                {query && (
+                  <button onClick={() => setQuery("")} aria-label="Șterge căutarea">
+                    <X className="h-3 w-3 shrink-0 text-forest-soft" />
+                  </button>
+                )}
               </div>
             </div>
             <div className="grid grid-cols-3 gap-[2px]">
-              {products.map((p) => (
+              {shown.map((p) => (
                 <ProductCard
                   key={p.id}
                   product={p}
@@ -108,8 +115,14 @@ function Index() {
                 />
               ))}
             </div>
+            {query && shown.length === 0 && (
+              <p className="mt-3 rounded-xl bg-card/90 px-3 py-2 text-center text-[11px] text-forest-soft backdrop-blur">
+                Niciun produs pentru „{query}”.
+              </p>
+            )}
           </div>
         </div>
+
       </section>
 
       {/* Categorii */}
