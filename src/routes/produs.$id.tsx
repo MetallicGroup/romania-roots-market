@@ -43,9 +43,27 @@ function ProductPage() {
         </nav>
 
         <div className="grid gap-10 lg:grid-cols-2">
-          <div className="overflow-hidden rounded-3xl bg-cream shadow-md">
-            <img src={product.image} alt={product.name} width={1024} height={1024} className="aspect-square h-full w-full object-cover" />
+          <div className="relative aspect-square overflow-hidden rounded-3xl bg-forest shadow-md">
+            <img src={product.image} alt={product.name} width={1024} height={1024} className="absolute inset-0 h-full w-full object-cover opacity-35" />
+            <div className="absolute inset-0 bg-forest/40" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
+              <span className="grid h-16 w-16 place-items-center rounded-full bg-cream/95 shadow-lg">
+                <Play className="h-6 w-6 fill-forest text-forest" />
+              </span>
+              <p className="font-serif text-cream/90">Video placeholder — {product.name}</p>
+              <p className="text-xs uppercase tracking-widest text-cream/60">1:00 min</p>
+            </div>
+            <div className="absolute inset-x-4 bottom-4">
+              <div className="h-1 w-full rounded-full bg-cream/25">
+                <div className="h-1 w-0 rounded-full bg-honey" />
+              </div>
+              <div className="mt-1.5 flex justify-between text-[10px] text-cream/70">
+                <span>0:00</span>
+                <span>1:00</span>
+              </div>
+            </div>
           </div>
+
 
           <div>
             <p className="flex items-center gap-1 text-xs uppercase tracking-[0.2em] text-terracotta">
