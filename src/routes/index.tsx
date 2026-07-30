@@ -365,7 +365,7 @@ function MapBackground() {
       <img
         src={romaniaHeroMap.url}
         alt="Hartă România"
-        className="absolute -top-[10%] left-0 h-[110%] w-full object-cover object-center md:-top-[2%] md:h-[100%]"
+        className="absolute -top-[12%] left-0 h-[112%] w-full object-cover object-center md:-top-[5%] md:h-[105%]"
       />
     </div>
   );
