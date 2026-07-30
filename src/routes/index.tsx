@@ -281,7 +281,7 @@ function Index() {
               ) : (
                 <ul className="space-y-3">
                   {cart.map((id, i) => {
-                    const p = products.find((x) => x.id === id)!;
+                    const p = catalog.find((x) => x.id === id)!;
                     return (
                       <li
                         key={i}
@@ -306,7 +306,7 @@ function Index() {
             {cart.length > 0 && (
               <div className="border-t border-forest/10 p-5">
                 <button className="w-full rounded-full bg-honey py-3 font-medium text-forest shadow-md transition-transform hover:scale-[1.01]">
-                  Comandă · {cart.reduce((s, id) => s + (products.find((p) => p.id === id)?.price ?? 0), 0)} lei
+                  Comandă · {cart.reduce((s, id) => s + (catalog.find((p) => p.id === id)?.price ?? 0), 0)} lei
                 </button>
               </div>
             )}
