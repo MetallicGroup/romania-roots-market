@@ -29,6 +29,19 @@ function Index() {
   const [cart, setCart] = useState<string[]>([]);
   const [saved, setSaved] = useState<string[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
+  const [query, setQuery] = useState("");
+
+  const q = query.trim().toLowerCase();
+  const shown: Product[] = q
+    ? catalog.filter(
+        (p) =>
+          p.name.toLowerCase().includes(q) ||
+          p.region.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q) ||
+          p.producer.toLowerCase().includes(q),
+      ).slice(0, 6)
+    : products;
+
 
   const addToCart = (id: string) => setCart((c) => [...c, id]);
   const toggleSave = (id: string) =>
