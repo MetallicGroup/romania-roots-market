@@ -403,7 +403,8 @@ function MapBackground() {
       <img
         src={romaniaHeroMap}
         alt="Hartă România"
-        className="absolute inset-0 h-full w-full object-contain object-center"
+        className="absolute inset-0 h-full w-full object-contain object-center transition-transform duration-700"
+        style={{ transform: "scale(1.1)" }}
       />
     </div>
   );
