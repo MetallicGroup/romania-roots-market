@@ -356,11 +356,15 @@ function ProductCard({
   onAdd: () => void;
 }) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-lg border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
+    <Link
+      to="/produs/$id"
+      params={{ id: product.id }}
+      className="group flex flex-col overflow-hidden rounded-lg border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg"
+    >
       <div className="relative aspect-square overflow-hidden bg-cream">
         <img src={product.image} alt={product.name} loading="lazy" width={256} height={256} className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105" />
         <button
-          onClick={onSave}
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); onSave(); }}
           aria-label="Salvează"
           className="absolute right-1 top-1 grid h-4 w-4 place-items-center rounded-full bg-cream/90 text-forest backdrop-blur transition-transform hover:scale-110"
         >
@@ -374,16 +378,18 @@ function ProductCard({
         <h3 className="font-serif text-[10px] leading-tight text-forest">{product.name}</h3>
         <div className="flex items-center justify-end pt-0.5">
           <button
-            onClick={onAdd}
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); onAdd(); }}
+            aria-label="Adaugă în coș"
             className="grid h-4 w-4 place-items-center rounded-full bg-honey text-forest shadow-sm transition-transform hover:scale-110"
           >
             <Plus className="h-2 w-2" />
           </button>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
+
 
 function MapBackground() {
   return (
