@@ -101,9 +101,9 @@ function Index() {
         <div className="absolute inset-x-0 bottom-[10vh] z-10 px-1 pb-3">
           <div className="mx-auto max-w-3xl">
             <div className="mb-5 flex items-center justify-between px-2">
-              <div>
-                <p className="text-[10px] font-medium leading-tight text-forest">Livrare gratuită</p>
-                <p className="text-[8px] leading-tight text-forest-soft">la comenzi de peste 500 lei</p>
+              <div className="drop-shadow-sm">
+                <p className="text-xs font-bold leading-tight text-cream">Livrare gratuită</p>
+                <p className="text-[10px] font-semibold leading-tight text-cream/90">la comenzi de peste 500 lei</p>
               </div>
               <div className="flex w-1/3 items-center gap-1 rounded-full bg-card/90 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
                 <Search className="h-3 w-3 shrink-0 text-forest-soft" />
