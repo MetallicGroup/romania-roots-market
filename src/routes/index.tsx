@@ -13,7 +13,7 @@ import {
   Plus,
   MapPin,
 } from "lucide-react";
-import romaniaHeroMap from "@/assets/romania-hero-map.webp.asset.json";
+import romaniaHeroMap from "@/assets/romania-hero-map.webp";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -400,7 +400,7 @@ function MapBackground() {
   return (
     <div className="absolute inset-0 overflow-hidden">
       <img
-        src={romaniaHeroMap.url}
+        src={romaniaHeroMap}
         alt="Hartă România"
         className="absolute -top-[16%] left-0 h-[110%] w-full object-cover object-center md:-top-[8%] md:h-[103%]"
       />
