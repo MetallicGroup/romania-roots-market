@@ -100,7 +100,7 @@ function Index() {
         {/* Products — positioned over the Bulgaria area, compact strip */}
         <div className="absolute inset-x-0 bottom-[10vh] z-10 px-1 pb-3">
           <div className="mx-auto max-w-3xl">
-            <div className="mb-3 flex items-center justify-end px-2">
+            <div className="mb-5 flex items-center justify-end px-2">
               <div className="flex w-1/3 items-center gap-1 rounded-full bg-card/90 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
                 <Search className="h-3 w-3 shrink-0 text-forest-soft" />
                 <input
@@ -376,7 +376,8 @@ function ProductCard({
       </div>
       <div className="flex flex-1 flex-col justify-between p-1">
         <h3 className="font-serif text-[10px] leading-tight text-forest">{product.name}</h3>
-        <div className="flex items-center justify-end pt-0.5">
+        <div className="flex items-center justify-between pt-0.5">
+          <p className="text-[8px] text-forest-soft">{product.weights[0]} · {product.price} lei</p>
           <button
             onClick={(e) => { e.preventDefault(); e.stopPropagation(); onAdd(); }}
             aria-label="Adaugă în coș"
@@ -397,7 +398,7 @@ function MapBackground() {
       <img
         src={romaniaHeroMap.url}
         alt="Hartă România"
-        className="absolute -top-[16%] left-0 h-[112%] w-full object-cover object-center md:-top-[8%] md:h-[105%]"
+        className="absolute -top-[16%] left-0 h-[110%] w-full object-cover object-center md:-top-[8%] md:h-[103%]"
       />
     </div>
   );
