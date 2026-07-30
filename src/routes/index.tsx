@@ -98,7 +98,7 @@ function Index() {
         </header>
 
         {/* Products — positioned over the Bulgaria area, compact strip */}
-        <div className="absolute inset-x-0 bottom-[10vh] z-10 px-1 pb-3">
+        <div className="absolute inset-x-0 bottom-[8vh] z-10 px-1 pb-3">
           <div className="mx-auto max-w-3xl">
             <div className="mb-[2px] flex items-center justify-between">
               <div className="drop-shadow-sm">
