@@ -70,7 +70,7 @@ function ProductPage() {
               <MapPin className="h-3 w-3" /> {product.region}
             </p>
             <h1 className="mt-3 font-serif text-4xl md:text-5xl">{product.name}</h1>
-            <p className="mt-2 text-sm text-forest-soft">de la <span className="font-medium text-forest">{product.producer}</span></p>
+            <p className="mt-2 text-sm text-forest-soft">Vândut de <span className="font-medium text-forest">{product.producer}</span></p>
 
             <p className="mt-6 text-lg leading-relaxed text-forest-soft">{product.description}</p>
 
