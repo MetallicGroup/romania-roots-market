@@ -366,7 +366,7 @@ function MapBackground() {
         src={romaniaHeroMap.url}
         alt="Hartă România"
         className="absolute inset-0 h-full w-full object-cover"
-        style={{ objectPosition: "center -16%" }}
+        style={{ objectPosition: "center -30%" }}
       />
     </div>
   );
