@@ -1,7 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { Menu, User, Heart, ShoppingBag } from "lucide-react";
+import { useCart } from "@/lib/cart";
 
 export function SiteHeader() {
+  const { cartCount, setCartOpen } = useCart();
+
   return (
     <header className="sticky top-0 z-30 border-b border-forest/10 bg-cream/85 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
@@ -23,8 +26,17 @@ export function SiteHeader() {
           <button className="grid h-9 w-9 place-items-center rounded-full text-forest hover:bg-forest/5" aria-label="Salvate">
             <Heart className="h-[18px] w-[18px]" />
           </button>
-          <button className="grid h-9 w-9 place-items-center rounded-full text-forest hover:bg-forest/5" aria-label="Coș">
+          <button
+            className="relative grid h-9 w-9 place-items-center rounded-full text-forest hover:bg-forest/5"
+            aria-label="Coș"
+            onClick={() => setCartOpen(true)}
+          >
             <ShoppingBag className="h-[18px] w-[18px]" />
+            {cartCount > 0 && (
+              <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-terracotta px-1 text-[10px] font-semibold text-cream">
+                {cartCount}
+              </span>
+            )}
           </button>
         </div>
       </div>
