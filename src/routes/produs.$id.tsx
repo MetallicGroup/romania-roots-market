@@ -1,15 +1,15 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getProduct, relatedProducts } from "@/lib/products";
 import { SiteHeader, SiteFooter } from "@/components/site-header";
 import { useCart } from "@/lib/cart";
-import { Heart, MapPin, Plus, Minus, ShoppingBag, Play } from "lucide-react";
+import { Heart, MapPin, Plus, Minus, ShoppingBag, Play, Share2 } from "lucide-react";
 
 export const Route = createFileRoute("/produs/$id")({
   loader: ({ params }) => {
     const product = getProduct(params.id);
     if (!product) throw notFound();
-    return { product, related: relatedProducts(params.id, 4) };
+    return { product, related: relatedProducts(params.id, 12) };
   },
   head: ({ loaderData }) => {
     const p = loaderData?.product;
@@ -31,6 +31,28 @@ function ProductPage() {
   const { addToCart, setCartOpen } = useCart();
   const [weight, setWeight] = useState(product.weights[0]);
   const [qty, setQty] = useState(1);
+  const [saved, setSaved] = useState(false);
+  const [showAllRelated, setShowAllRelated] = useState(false);
+
+  useEffect(() => {
+    setShowAllRelated(false);
+    setWeight(product.weights[0]);
+    setQty(1);
+    setSaved(false);
+  }, [product.id, product.weights]);
+
+  const share = async () => {
+    const url = typeof window !== "undefined" ? window.location.href : "";
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: product.name, text: product.description, url });
+      } else {
+        await navigator.clipboard.writeText(url);
+      }
+    } catch {
+      /* user cancelled */
+    }
+  };
 
   return (
     <div className="min-h-screen bg-cream text-forest">
@@ -68,16 +90,36 @@ function ProductPage() {
           </div>
 
           <div>
-            <p className="flex items-center gap-1 text-[10px] uppercase tracking-[0.2em] text-terracotta md:text-xs">
-              <MapPin className="h-3 w-3" /> {product.region}
-            </p>
+            <div className="flex items-center justify-between gap-2">
+              <p className="flex items-center gap-1 text-[10px] uppercase tracking-[0.2em] text-terracotta md:text-xs">
+                <MapPin className="h-3 w-3" /> {product.region}
+              </p>
+              <div className="flex shrink-0 items-center gap-0.5">
+                <button
+                  type="button"
+                  onClick={() => setSaved((s) => !s)}
+                  aria-label="Salvează la favorite"
+                  className="grid h-7 w-7 place-items-center rounded-full text-forest transition-colors hover:bg-forest/5"
+                >
+                  <Heart className={`h-3.5 w-3.5 ${saved ? "fill-terracotta text-terracotta" : ""}`} />
+                </button>
+                <button
+                  type="button"
+                  onClick={share}
+                  aria-label="Distribuie"
+                  className="grid h-7 w-7 place-items-center rounded-full text-forest transition-colors hover:bg-forest/5"
+                >
+                  <Share2 className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            </div>
             <h1 className="mt-1.5 font-serif text-2xl leading-tight md:mt-3 md:text-4xl lg:text-5xl">{product.name}</h1>
             <p className="mt-1 text-xs text-forest-soft md:mt-2 md:text-sm">
               Produs de <span className="font-medium text-forest">{product.producer}</span>
             </p>
-
-            {/* Descrierea pe mobil e după CTA, ca să vezi prețul din prima */}
-            <p className="mt-6 hidden text-lg leading-relaxed text-forest-soft lg:block">{product.description}</p>
+            <p className="mt-3 text-sm leading-relaxed text-forest-soft md:mt-4 md:text-base lg:text-lg">
+              {product.description}
+            </p>
 
             <div className="mt-4 md:mt-8">
               <p className="text-[10px] uppercase tracking-wider text-forest-soft md:text-xs">Gramaj</p>
@@ -114,23 +156,18 @@ function ProductPage() {
               </div>
             </div>
 
-            <div className="mt-4 flex gap-3 md:mt-6">
+            <div className="mt-4 md:mt-6">
               <button
                 type="button"
                 onClick={() => {
                   addToCart(product.id, qty);
                   setCartOpen(true);
                 }}
-                className="flex flex-1 items-center justify-center gap-2 rounded-full bg-honey py-3.5 font-medium text-forest shadow-md transition-transform hover:scale-[1.01] md:py-4"
+                className="flex w-full items-center justify-center gap-2 rounded-full bg-honey py-3.5 font-medium text-forest shadow-md transition-transform hover:scale-[1.01] md:py-4"
               >
                 <ShoppingBag className="h-4 w-4" /> Adaugă în coș
               </button>
-              <button className="grid h-12 w-12 place-items-center rounded-full border border-forest/20 bg-card text-forest transition-colors hover:bg-forest/5 md:h-14 md:w-14" aria-label="Salvează">
-                <Heart className="h-5 w-5" />
-              </button>
             </div>
-
-            <p className="mt-5 text-sm leading-relaxed text-forest-soft lg:hidden">{product.description}</p>
 
             <ul className="mt-5 space-y-2 border-t border-forest/10 pt-4 text-sm text-forest-soft md:mt-8 md:pt-6">
               <li>✦ Livrare în 2-4 zile lucrătoare</li>
@@ -149,7 +186,7 @@ function ProductPage() {
               </Link>
             </div>
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {related.map((p: import("@/lib/products").Product) => (
+              {(showAllRelated ? related : related.slice(0, 4)).map((p: import("@/lib/products").Product) => (
                 <Link
                   key={p.id}
                   to="/produs/$id"
@@ -183,6 +220,17 @@ function ProductPage() {
                 </Link>
               ))}
             </div>
+            {!showAllRelated && related.length > 4 && (
+              <div className="mt-6 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setShowAllRelated(true)}
+                  className="rounded-full border border-forest/20 bg-card px-6 py-2.5 text-sm font-medium text-forest shadow-sm transition-all hover:border-forest/40 hover:shadow-md"
+                >
+                  Vezi mai multe
+                </button>
+              </div>
+            )}
           </section>
         )}
       </main>

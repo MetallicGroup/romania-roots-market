@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { products as catalog } from "@/lib/products";
 import { SiteFooter } from "@/components/site-header";
 import { useCart } from "@/lib/cart";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Search,
   Menu,
@@ -41,6 +41,7 @@ function Index() {
   const [videoOpen, setVideoOpen] = useState(false);
   const [saved, setSaved] = useState<string[]>([]);
   const [query, setQuery] = useState("");
+  const [showAllPopular, setShowAllPopular] = useState(false);
   // Lock hero height once — pe mobil dvh se schimbă la scroll (bara browserului) și „mişcă” harta.
   const [heroH, setHeroH] = useState<number | null>(null);
 
@@ -63,13 +64,6 @@ function Index() {
       )
     : catalog;
 
-  const { row1, row2 } = useMemo(() => {
-    const a: Product[] = [];
-    const b: Product[] = [];
-    filtered.forEach((p, i) => (i % 2 === 0 ? a : b).push(p));
-    return { row1: a, row2: b };
-  }, [filtered]);
-
   const toggleSave = (id: string) =>
     setSaved((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
 
@@ -82,45 +76,37 @@ function Index() {
       >
         <MapBackground />
 
-        <button
-          onClick={() => setVideoOpen(true)}
-          className="absolute left-1 top-1 z-20 w-[140px] overflow-hidden rounded-xl shadow-lg ring-1 ring-forest/10 transition-transform hover:scale-[1.02] animate-fade-up sm:w-[180px]"
-          style={{ aspectRatio: "16/9" }}
-        >
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(135deg,#3a2814 0%,#7a4a1c 50%,#c78118 100%)",
-            }}
-          />
-          <div className="absolute inset-0 bg-black/25" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="grid h-10 w-10 place-items-center rounded-full bg-cream/95 shadow-md transition-transform group-hover:scale-110">
-              <Play className="h-3.5 w-3.5 fill-forest text-forest" />
-            </span>
-          </div>
-          <span className="absolute bottom-1.5 left-2.5 font-serif text-[10px] font-medium text-cream/95">
-            Povestea noastră · 4:32
-          </span>
-        </button>
-
-        <header className="relative z-20 flex items-start justify-end px-1 pt-1 sm:px-2">
-          <div className="flex flex-col items-end gap-1">
-            <nav className="flex items-center gap-1.5">
-              <IconBtn label="Categorii">
-                <Menu className="h-[18px] w-[18px]" />
-              </IconBtn>
-              <IconBtn label="Cont">
-                <User className="h-[18px] w-[18px]" />
-              </IconBtn>
-              <IconBtn label="Salvate" badge={saved.length}>
-                <Heart className="h-[18px] w-[18px]" />
-              </IconBtn>
-              <IconBtn label="Coș" badge={cartCount} onClick={() => setCartOpen(true)}>
-                <ShoppingBag className="h-[18px] w-[18px]" />
-              </IconBtn>
-            </nav>
+        <header className="relative z-20 flex items-start justify-between gap-2 px-1 pt-1 sm:px-2">
+          <nav className="flex shrink-0 items-center gap-1.5">
+            <IconBtn label="Categorii">
+              <Menu className="h-[18px] w-[18px]" />
+            </IconBtn>
+            <IconBtn label="Cont">
+              <User className="h-[18px] w-[18px]" />
+            </IconBtn>
+            <IconBtn label="Salvate" badge={saved.length}>
+              <Heart className="h-[18px] w-[18px]" />
+            </IconBtn>
+            <IconBtn label="Coș" badge={cartCount} onClick={() => setCartOpen(true)}>
+              <ShoppingBag className="h-[18px] w-[18px]" />
+            </IconBtn>
+          </nav>
+          <div className="flex min-w-0 flex-1 flex-col items-end gap-1">
+            <div className="flex w-full max-w-[220px] items-center gap-1 rounded-full bg-card/90 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur sm:max-w-[260px]">
+              <Search className="h-3 w-3 shrink-0 text-forest-soft" />
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Caută"
+                className="min-w-0 flex-1 bg-transparent text-[10px] text-forest placeholder:text-forest-soft/70 focus:outline-none"
+              />
+              {query && (
+                <button onClick={() => setQuery("")} aria-label="Șterge căutarea">
+                  <X className="h-3 w-3 shrink-0 text-forest-soft" />
+                </button>
+              )}
+            </div>
             <a href="/" className="font-serif text-xl font-semibold tracking-tight text-forest">
               nume site<span className="text-terracotta">.</span>
             </a>
@@ -129,49 +115,48 @@ function Index() {
 
         <div className="absolute inset-x-0 bottom-0 z-10 px-1 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
           <div className="mx-auto max-w-3xl">
-            <div className="mb-[2px] flex items-center justify-between gap-2">
-              <div className="min-w-0 basis-1/3 drop-shadow-sm">
-                <p className="text-xs font-bold leading-tight text-cream">Livrare gratuită</p>
-                <p className="text-[10px] font-semibold leading-tight text-cream/90">
-                  la comenzi de peste 500 lei
-                </p>
-              </div>
-              <div className="flex min-w-0 basis-2/3 items-center gap-1 rounded-full bg-card/90 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur">
-                <Search className="h-3 w-3 shrink-0 text-forest-soft" />
-                <input
-                  type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Caută"
-                  className="min-w-0 flex-1 bg-transparent text-[10px] text-forest placeholder:text-forest-soft/70 focus:outline-none"
-                />
-                {query && (
-                  <button onClick={() => setQuery("")} aria-label="Șterge căutarea">
-                    <X className="h-3 w-3 shrink-0 text-forest-soft" />
-                  </button>
-                )}
-              </div>
+            <div className="mb-[2px] drop-shadow-sm">
+              <p className="text-xs font-bold leading-tight text-cream">Livrare gratuită</p>
+              <p className="text-[10px] font-semibold leading-tight text-cream/90">
+                la comenzi de peste 500 lei
+              </p>
             </div>
+
+            <button
+              onClick={() => setVideoOpen(true)}
+              type="button"
+              className="relative mb-[2px] w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-forest/10 transition-transform hover:scale-[1.01]"
+              style={{ aspectRatio: "16/9" }}
+            >
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(135deg,#3a2814 0%,#7a4a1c 50%,#c78118 100%)",
+                }}
+              />
+              <div className="absolute inset-0 bg-black/25" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="grid h-10 w-10 place-items-center rounded-full bg-cream/95 shadow-md">
+                  <Play className="h-3.5 w-3.5 fill-forest text-forest" />
+                </span>
+              </div>
+              <span className="absolute bottom-1.5 left-2.5 font-serif text-[10px] font-medium text-cream/95">
+                Povestea noastră · 4:32
+              </span>
+            </button>
 
             {filtered.length === 0 ? (
               <p className="mt-1 rounded-xl bg-card/90 px-3 py-2 text-center text-[11px] text-forest-soft backdrop-blur">
                 Niciun produs pentru „{query}”.
               </p>
             ) : (
-              <div className="flex flex-col gap-[2px]">
-                <ProductRow
-                  products={row1}
-                  saved={saved}
-                  onSave={toggleSave}
-                  onAdd={addToCart}
-                />
-                <ProductRow
-                  products={row2}
-                  saved={saved}
-                  onSave={toggleSave}
-                  onAdd={addToCart}
-                />
-              </div>
+              <ProductRow
+                products={filtered}
+                saved={saved}
+                onSave={toggleSave}
+                onAdd={addToCart}
+              />
             )}
           </div>
         </div>
@@ -254,13 +239,13 @@ function Index() {
               <p className="mt-2 text-sm text-forest-soft">Alese cu grijă de la producători români.</p>
             </div>
           </div>
-          <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
-            {catalog.slice(0, 8).map((p) => (
+          <div className="mt-6 grid grid-cols-2 gap-2 sm:gap-3 md:grid-cols-3 lg:grid-cols-4">
+            {(showAllPopular ? catalog : catalog.slice(0, 4)).map((p) => (
               <Link
                 key={p.id}
                 to="/produs/$id"
                 params={{ id: p.id }}
-                className="group flex flex-col overflow-hidden rounded-xl border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg sm:rounded-2xl"
+                className="group flex flex-col overflow-hidden rounded-xl border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
               >
                 <div className="relative aspect-[4/5] overflow-hidden bg-cream sm:aspect-square">
                   <img
@@ -275,12 +260,12 @@ function Index() {
                     {p.region}
                   </span>
                 </div>
-                <div className="flex flex-1 flex-col justify-between p-3.5 sm:p-4">
+                <div className="flex flex-1 flex-col justify-between p-2.5 sm:p-3">
                   <div>
                     <h3 className="font-serif text-[15px] leading-snug text-forest sm:text-lg">{p.name}</h3>
                     <p className="mt-1 text-xs text-forest-soft">Produs de {p.producer}</p>
                   </div>
-                  <div className="mt-3 flex items-center justify-between gap-2">
+                  <div className="mt-2 flex items-center justify-between gap-2">
                     <p className="text-sm font-medium text-forest">
                       {p.weights[0]} · {p.price} lei
                     </p>
@@ -292,7 +277,7 @@ function Index() {
                         addToCart(p.id);
                       }}
                       aria-label="Adaugă în coș"
-                      className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-honey text-forest shadow-sm transition-transform hover:scale-110"
+                      className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-honey text-forest shadow-sm transition-transform hover:scale-110"
                     >
                       <Plus className="h-4 w-4" />
                     </button>
@@ -301,6 +286,17 @@ function Index() {
               </Link>
             ))}
           </div>
+          {!showAllPopular && catalog.length > 4 && (
+            <div className="mt-6 flex justify-center">
+              <button
+                type="button"
+                onClick={() => setShowAllPopular(true)}
+                className="rounded-full border border-forest/20 bg-card px-6 py-2.5 text-sm font-medium text-forest shadow-sm transition-all hover:border-forest/40 hover:shadow-md"
+              >
+                Vezi mai mult
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -373,7 +369,7 @@ function ProductRow({
       style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
     >
       {products.map((p) => (
-        <div key={p.id} className="w-[calc((100%-4px)/3.15)] shrink-0 snap-start">
+        <div key={p.id} className="w-[calc((100%-4px)/3)] shrink-0 snap-start">
           <ProductCard
             product={p}
             isSaved={saved.includes(p.id)}
