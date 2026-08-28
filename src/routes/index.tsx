@@ -115,13 +115,6 @@ function Index() {
 
         <div className="absolute inset-x-0 bottom-0 z-10 px-1 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
           <div className="mx-auto max-w-3xl">
-            <div className="mb-[2px] drop-shadow-sm">
-              <p className="text-xs font-bold leading-tight text-cream">Livrare gratuită</p>
-              <p className="text-[10px] font-semibold leading-tight text-cream/90">
-                la comenzi de peste 500 lei
-              </p>
-            </div>
-
             <button
               onClick={() => setVideoOpen(true)}
               type="button"
