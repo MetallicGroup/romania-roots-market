@@ -1,8 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { products as catalog } from "@/lib/products";
-import { SiteFooter } from "@/components/site-header";
 import { useCart } from "@/lib/cart";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Search,
   Menu,
@@ -11,9 +10,8 @@ import {
   ShoppingBag,
   Play,
   X,
-  Plus,
-  ChevronRight,
-  LayoutGrid,
+  Facebook,
+  Youtube,
 } from "lucide-react";
 import romaniaHeroMap from "@/assets/romania-hero-map.webp";
 import catAlimentare from "@/assets/categories/alimentare.jpg";
@@ -26,35 +24,45 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-type Product = (typeof catalog)[number];
-
-const DEPARTMENTS = [
-  { name: "Produse alimentare", image: catAlimentare },
-  { name: "Băuturi", image: catBauturi },
-  { name: "Casă și grădină", image: catCasa },
-  { name: "Cosmetice", image: catCosmetice },
-  { name: "Îmbrăcăminte", image: catImbracaminte },
+const CATEGORY_CLOUD = [
+  { name: "cosmetice", href: "/categorii" },
+  { name: "alimentare", href: "/categorie/miere" },
+  { name: "îmbrăcăminte", href: "/categorii", withPhoto: true },
+  { name: "băuturi", href: "/categorii" },
+  { name: "lectură", href: "/categorii" },
+  { name: "bricolaj & construcții", href: "/categorii" },
+  { name: "casă grădină", href: "/categorii" },
+  { name: "meșteșuguri", href: "/categorii" },
+  { name: "mobilă", href: "/categorii" },
 ] as const;
 
-function Index() {
-  const { cartCount, setCartOpen, addToCart } = useCart();
-  const [videoOpen, setVideoOpen] = useState(false);
-  const [saved, setSaved] = useState<string[]>([]);
-  const [query, setQuery] = useState("");
-  const [showAllPopular, setShowAllPopular] = useState(false);
-  // Lock hero height once — pe mobil dvh se schimbă la scroll (bara browserului) și „mişcă” harta.
-  const [heroH, setHeroH] = useState<number | null>(null);
+const MEDIA_ITEMS = [
+  { id: "video", type: "video" as const, label: "Povestea noastră", image: catAlimentare },
+  { id: "foto-1", type: "foto" as const, label: "Foto", image: catBauturi },
+  { id: "foto-2", type: "foto" as const, label: "Foto", image: catCasa, badge: "+30 foto" },
+  { id: "foto-3", type: "foto" as const, label: "Foto", image: catCosmetice },
+  { id: "foto-4", type: "foto" as const, label: "Foto", image: catImbracaminte },
+];
 
-  useEffect(() => {
-    const lock = () => setHeroH(window.innerHeight);
-    lock();
-    const onOrient = () => lock();
-    window.addEventListener("orientationchange", onOrient);
-    return () => window.removeEventListener("orientationchange", onOrient);
-  }, []);
+const MAP_PINS = [
+  { top: "28%", left: "32%" },
+  { top: "34%", left: "48%" },
+  { top: "42%", left: "58%" },
+  { top: "38%", left: "72%" },
+  { top: "52%", left: "40%" },
+  { top: "55%", left: "62%" },
+  { top: "62%", left: "50%" },
+  { top: "48%", left: "28%" },
+];
+
+function Index() {
+  const { cartCount, setCartOpen } = useCart();
+  const [videoOpen, setVideoOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [query, setQuery] = useState("");
 
   const q = query.trim().toLowerCase();
-  const filtered: Product[] = q
+  const searchResults = q
     ? catalog.filter(
         (p) =>
           p.name.toLowerCase().includes(q) ||
@@ -62,257 +70,218 @@ function Index() {
           p.category.toLowerCase().includes(q) ||
           p.producer.toLowerCase().includes(q),
       )
-    : catalog;
-
-  const toggleSave = (id: string) =>
-    setSaved((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
+    : [];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* HERO — înălțime blocată; produsele peste hartă (conturul rămâne vizibil) */}
-      <section
-        className="relative w-full overflow-hidden bg-forest"
-        style={{ height: heroH ? `${heroH}px` : "100svh" }}
-      >
-        <MapBackground />
-
-        <header className="relative z-20 flex items-start justify-between gap-2 px-1 pt-1 sm:px-2">
-          <nav className="flex shrink-0 items-center gap-1.5">
-            <IconBtn label="Categorii">
-              <Menu className="h-[18px] w-[18px]" />
-            </IconBtn>
+    <div className="min-h-screen bg-cream text-forest">
+      {/* Header — ROMproducător + iconițe */}
+      <header className="sticky top-0 z-30 border-b border-forest/10 bg-cream/95 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+          <Link to="/" className="font-serif text-xl font-semibold tracking-tight sm:text-2xl">
+            <span className="text-[#CE1126]">R</span>
+            <span className="text-[#FCD116]">O</span>
+            <span className="text-[#002B7F]">M</span>
+            <span className="text-forest">producător</span>
+          </Link>
+          <div className="flex items-center gap-0.5">
             <IconBtn label="Cont">
               <User className="h-[18px] w-[18px]" />
             </IconBtn>
-            <IconBtn label="Salvate" badge={saved.length}>
+            <IconBtn label="Favorite">
               <Heart className="h-[18px] w-[18px]" />
             </IconBtn>
             <IconBtn label="Coș" badge={cartCount} onClick={() => setCartOpen(true)}>
               <ShoppingBag className="h-[18px] w-[18px]" />
             </IconBtn>
-          </nav>
-          <div className="flex min-w-0 flex-1 flex-col items-end gap-1">
-            <div className="flex w-full max-w-[220px] items-center gap-1 rounded-full bg-card/90 px-2 py-1.5 shadow-md ring-1 ring-forest/10 backdrop-blur sm:max-w-[260px]">
-              <Search className="h-3 w-3 shrink-0 text-forest-soft" />
+          </div>
+        </div>
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 pb-3">
+          <Link
+            to="/categorii"
+            className="grid h-10 w-10 place-items-center rounded-full text-forest hover:bg-forest/5"
+            aria-label="Meniu"
+          >
+            <Menu className="h-5 w-5" />
+          </Link>
+          <button
+            type="button"
+            onClick={() => setSearchOpen((v) => !v)}
+            className="grid h-10 w-10 place-items-center rounded-full text-forest hover:bg-forest/5"
+            aria-label="Caută"
+          >
+            <Search className="h-5 w-5" />
+          </button>
+        </div>
+        {searchOpen && (
+          <div className="border-t border-forest/10 px-4 py-3">
+            <div className="mx-auto flex max-w-6xl items-center gap-2 rounded-full border border-forest/15 bg-card px-3 py-2">
+              <Search className="h-4 w-4 shrink-0 text-forest-soft" />
               <input
+                autoFocus
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Caută"
-                className="min-w-0 flex-1 bg-transparent text-[10px] text-forest placeholder:text-forest-soft/70 focus:outline-none"
+                placeholder="Caută produse, regiuni, producători…"
+                className="min-w-0 flex-1 bg-transparent text-sm text-forest placeholder:text-forest-soft/70 focus:outline-none"
               />
               {query && (
-                <button onClick={() => setQuery("")} aria-label="Șterge căutarea">
-                  <X className="h-3 w-3 shrink-0 text-forest-soft" />
+                <button type="button" onClick={() => setQuery("")} aria-label="Șterge">
+                  <X className="h-4 w-4 text-forest-soft" />
                 </button>
               )}
             </div>
-            <a href="/" className="font-serif text-xl font-semibold tracking-tight text-forest">
-              nume site<span className="text-terracotta">.</span>
-            </a>
-          </div>
-        </header>
-
-        <div className="absolute inset-x-0 bottom-0 z-10 px-1 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
-          <div className="mx-auto max-w-3xl">
-            <button
-              onClick={() => setVideoOpen(true)}
-              type="button"
-              className="relative mb-[2px] w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-forest/10 transition-transform hover:scale-[1.01]"
-              style={{ aspectRatio: "16/9" }}
-            >
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(135deg,#3a2814 0%,#7a4a1c 50%,#c78118 100%)",
-                }}
-              />
-              <div className="absolute inset-0 bg-black/25" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="grid h-10 w-10 place-items-center rounded-full bg-cream/95 shadow-md">
-                  <Play className="h-3.5 w-3.5 fill-forest text-forest" />
-                </span>
-              </div>
-              <span className="absolute bottom-1.5 left-2.5 font-serif text-[10px] font-medium text-cream/95">
-                Povestea noastră · 4:32
-              </span>
-            </button>
-
-            {filtered.length === 0 ? (
-              <p className="mt-1 rounded-xl bg-card/90 px-3 py-2 text-center text-[11px] text-forest-soft backdrop-blur">
-                Niciun produs pentru „{query}”.
-              </p>
-            ) : (
-              <ProductRow
-                products={filtered}
-                saved={saved}
-                onSave={toggleSave}
-                onAdd={addToCart}
-              />
+            {q && (
+              <ul className="mx-auto mt-2 max-w-6xl space-y-1">
+                {searchResults.length === 0 ? (
+                  <li className="px-2 py-2 text-sm text-forest-soft">Niciun rezultat.</li>
+                ) : (
+                  searchResults.slice(0, 5).map((p) => (
+                    <li key={p.id}>
+                      <Link
+                        to="/produs/$id"
+                        params={{ id: p.id }}
+                        className="flex items-center gap-3 rounded-xl px-2 py-2 hover:bg-forest/5"
+                        onClick={() => setSearchOpen(false)}
+                      >
+                        <img src={p.image} alt="" className="h-9 w-9 rounded-lg object-cover" />
+                        <span className="font-serif text-sm text-forest">{p.name}</span>
+                        <span className="ml-auto text-xs text-forest-soft">{p.region}</span>
+                      </Link>
+                    </li>
+                  ))
+                )}
+              </ul>
             )}
           </div>
+        )}
+      </header>
+
+      {/* Hero — hartă full + pinuri */}
+      <section className="relative w-full overflow-hidden bg-forest" style={{ height: "58svh" }}>
+        <img
+          src={romaniaHeroMap}
+          alt="Hartă România"
+          className="pointer-events-none absolute inset-0 h-full w-full object-contain object-[center_30%]"
+          style={{ transform: "scale(1.28) translate(0.5%, -1%)" }}
+        />
+        {MAP_PINS.map((pin, i) => (
+          <span
+            key={i}
+            className="absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-terracotta shadow ring-2 ring-cream/80 animate-pin"
+            style={{ top: pin.top, left: pin.left, animationDelay: `${i * 0.18}s` }}
+          />
+        ))}
+      </section>
+
+      {/* Media 9:16 carousel */}
+      <section className="bg-cream px-3 pt-4">
+        <div
+          className="flex gap-2 overflow-x-auto pb-1 snap-x snap-mandatory"
+          style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
+        >
+          {MEDIA_ITEMS.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => item.type === "video" && setVideoOpen(true)}
+              className="relative aspect-[9/16] w-[31%] shrink-0 snap-start overflow-hidden rounded-xl bg-forest shadow-sm"
+            >
+              <img
+                src={item.image}
+                alt={item.label}
+                className="absolute inset-0 h-full w-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-forest/35" />
+              {item.type === "video" ? (
+                <span className="absolute inset-0 grid place-items-center">
+                  <span className="grid h-11 w-11 place-items-center rounded-full bg-cream/95 shadow-md">
+                    <Play className="h-4 w-4 fill-forest text-forest" />
+                  </span>
+                </span>
+              ) : (
+                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-forest/80 to-transparent px-2 pb-2 pt-8 text-left font-serif text-[11px] text-cream">
+                  {item.label}
+                </span>
+              )}
+              {"badge" in item && item.badge && (
+                <span className="absolute right-1.5 top-1.5 rounded-full bg-cream/95 px-2 py-0.5 text-[10px] font-semibold text-forest shadow">
+                  {item.badge}
+                </span>
+              )}
+            </button>
+          ))}
         </div>
       </section>
 
-      {/* Categorii — slider departamente + stats */}
-      <section className="bg-cream py-16 md:py-20">
-        <div className="mx-auto max-w-6xl">
-          <div className="flex items-end justify-between px-4">
-            <div>
-              <h2 className="font-serif text-3xl text-forest md:text-4xl">Categorii</h2>
-              <p className="mt-2 text-sm text-forest-soft">
-                Glisează pentru a explora magazinul.
-              </p>
-            </div>
-            <Link to="/categorii" className="text-sm text-terracotta hover:underline">
-              Vezi toate →
-            </Link>
-          </div>
-
-          <div
-            className="mt-8 flex gap-2.5 overflow-x-auto px-4 pb-2 snap-x snap-mandatory"
-            style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
-          >
-            {DEPARTMENTS.map((d) => (
-              <button
-                key={d.name}
-                type="button"
-                className="relative aspect-[3/4] w-[calc((100%-30px)/3.25)] shrink-0 snap-start overflow-hidden rounded-xl border border-forest/10 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+      {/* Category cloud */}
+      <section className="bg-cream px-5 py-10">
+        <div className="mx-auto flex max-w-lg flex-wrap items-center justify-center gap-x-4 gap-y-3">
+          {CATEGORY_CLOUD.map((c) =>
+            "withPhoto" in c && c.withPhoto ? (
+              <Link
+                key={c.name}
+                to={c.href}
+                className="inline-flex items-center gap-2 font-serif text-lg text-forest transition-colors hover:text-terracotta sm:text-xl"
               >
                 <img
-                  src={d.image}
-                  alt={d.name}
-                  loading="lazy"
-                  width={400}
-                  height={533}
-                  className="absolute inset-0 h-full w-full object-cover"
+                  src={catImbracaminte}
+                  alt=""
+                  className="h-8 w-8 rounded-full object-cover ring-1 ring-forest/15"
                 />
-                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-forest/85 to-transparent px-2.5 pb-2.5 pt-8 font-serif text-[13px] leading-snug text-cream">
-                  {d.name}
-                </span>
-              </button>
-            ))}
-            <Link
-              to="/categorii"
-              className="relative flex aspect-[3/4] w-[calc((100%-30px)/3.25)] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-xl border border-forest/10 bg-forest p-3 text-left text-cream shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-            >
-              <span className="grid h-9 w-9 place-items-center rounded-full bg-cream/15">
-                <LayoutGrid className="h-4 w-4" />
-              </span>
-              <span className="inline-flex items-center gap-0.5 font-serif text-[13px] leading-snug">
-                Vezi toate <ChevronRight className="h-3.5 w-3.5" />
-              </span>
-            </Link>
-          </div>
-
-          <div className="mt-10 grid grid-cols-3 gap-3 px-4">
-            <div className="rounded-2xl border border-forest/10 bg-card px-3 py-5 text-center shadow-sm">
-              <p className="font-serif text-2xl text-forest md:text-3xl">200+</p>
-              <p className="mt-1 text-[11px] uppercase tracking-wider text-forest-soft">Producători</p>
-            </div>
-            <div className="rounded-2xl border border-forest/10 bg-card px-3 py-5 text-center shadow-sm">
-              <p className="font-serif text-2xl text-forest md:text-3xl">2000+</p>
-              <p className="mt-1 text-[11px] uppercase tracking-wider text-forest-soft">Produse</p>
-            </div>
-            <div className="rounded-2xl border border-forest/10 bg-card px-3 py-5 text-center shadow-sm">
-              <p className="font-serif text-lg text-forest md:text-xl">Livrare</p>
-              <p className="mt-1 text-[11px] uppercase tracking-wider text-forest-soft">În toată țara</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Produse populare */}
-      <section className="bg-cream px-4 pb-16">
-        <div className="mx-auto max-w-6xl">
-          <div className="flex items-end justify-between">
-            <div>
-              <h2 className="font-serif text-3xl text-forest md:text-4xl">Produse populare</h2>
-              <p className="mt-2 text-sm text-forest-soft">Alese cu grijă de la producători români.</p>
-            </div>
-          </div>
-          <div className="mt-6 grid grid-cols-2 gap-2 sm:gap-3 md:grid-cols-3 lg:grid-cols-4">
-            {(showAllPopular ? catalog : catalog.slice(0, 4)).map((p) => (
-              <Link
-                key={p.id}
-                to="/produs/$id"
-                params={{ id: p.id }}
-                className="group flex flex-col overflow-hidden rounded-xl border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
-              >
-                <div className="relative aspect-[4/5] overflow-hidden bg-cream sm:aspect-square">
-                  <img
-                    src={p.image}
-                    alt={p.name}
-                    loading="lazy"
-                    width={512}
-                    height={512}
-                    className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                  />
-                  <span className="absolute bottom-2 left-2 rounded-full bg-cream/95 px-2.5 py-1 text-[10px] font-semibold text-forest shadow-sm backdrop-blur sm:text-xs">
-                    {p.region}
-                  </span>
-                </div>
-                <div className="flex flex-1 flex-col justify-between p-2.5 sm:p-3">
-                  <div>
-                    <h3 className="font-serif text-[15px] leading-snug text-forest sm:text-lg">{p.name}</h3>
-                    <p className="mt-1 text-xs text-forest-soft">Produs de {p.producer}</p>
-                  </div>
-                  <div className="mt-2 flex items-center justify-between gap-2">
-                    <p className="text-sm font-medium text-forest">
-                      {p.weights[0]} · {p.price} lei
-                    </p>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        addToCart(p.id);
-                      }}
-                      aria-label="Adaugă în coș"
-                      className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-honey text-forest shadow-sm transition-transform hover:scale-110"
-                    >
-                      <Plus className="h-4 w-4" />
-                    </button>
-                  </div>
-                </div>
+                {c.name}
               </Link>
-            ))}
-          </div>
-          {!showAllPopular && catalog.length > 4 && (
-            <div className="mt-6 flex justify-center">
-              <button
-                type="button"
-                onClick={() => setShowAllPopular(true)}
-                className="rounded-full border border-forest/20 bg-card px-6 py-2.5 text-sm font-medium text-forest shadow-sm transition-all hover:border-forest/40 hover:shadow-md"
+            ) : (
+              <Link
+                key={c.name}
+                to={c.href}
+                className="font-serif text-lg text-forest transition-colors hover:text-terracotta sm:text-xl"
               >
-                Vezi mai mult
-              </button>
-            </div>
+                {c.name}
+              </Link>
+            ),
           )}
         </div>
       </section>
 
-      {/* Despre */}
-      <section className="bg-forest px-4 py-20 text-cream">
-        <div className="mx-auto max-w-6xl">
-          <p className="text-sm uppercase tracking-widest text-honey">Despre noi</p>
-          <h2 className="mt-3 max-w-xl font-serif text-3xl md:text-4xl">Gustul satului, adus la tine acasă.</h2>
-          <p className="mt-4 max-w-xl text-cream/80">
-            Lucrăm direct cu familii de producători din toată România. Miere culesă în livezi,
-            dulcețuri fierte la ceaun, brânzeturi din stânele muntelui — totul cu poveste și cu
-            nume.
-          </p>
-          <Link
-            to="/despre"
-            className="mt-6 inline-block rounded-full bg-honey px-6 py-3 font-medium text-forest transition-transform hover:scale-[1.02]"
-          >
-            Povestea noastră
-          </Link>
+      {/* Stats */}
+      <section className="bg-cream px-4 pb-10">
+        <div className="mx-auto grid max-w-lg grid-cols-3 overflow-hidden rounded-2xl border border-forest/15">
+          <div className="border-r border-forest/15 px-2 py-4 text-center">
+            <p className="font-serif text-xl text-forest sm:text-2xl">350</p>
+            <p className="mt-0.5 text-[10px] uppercase tracking-wider text-forest-soft">producători</p>
+          </div>
+          <div className="border-r border-forest/15 px-2 py-4 text-center">
+            <p className="font-serif text-xl text-forest sm:text-2xl">1500</p>
+            <p className="mt-0.5 text-[10px] uppercase tracking-wider text-forest-soft">produse</p>
+          </div>
+          <div className="px-2 py-4 text-center">
+            <p className="font-serif text-xl text-forest sm:text-2xl">30</p>
+            <p className="mt-0.5 text-[10px] uppercase tracking-wider text-forest-soft">zile</p>
+          </div>
         </div>
       </section>
 
-      <SiteFooter />
+      {/* Social */}
+      <footer className="border-t border-forest/10 bg-cream px-4 py-8">
+        <div className="mx-auto flex max-w-lg items-center justify-center gap-5">
+          <SocialBtn label="Google" className="bg-[#EA4335]/15 text-[#EA4335]">
+            <span className="font-serif text-lg font-bold">G</span>
+          </SocialBtn>
+          <SocialBtn label="TikTok" className="bg-forest/10 text-forest">
+            <span className="font-serif text-base font-bold">♪</span>
+          </SocialBtn>
+          <SocialBtn label="YouTube" className="bg-[#FF0000]/15 text-[#FF0000]">
+            <Youtube className="h-5 w-5" />
+          </SocialBtn>
+          <SocialBtn label="Facebook" className="bg-[#1877F2]/15 text-[#1877F2]">
+            <Facebook className="h-5 w-5" />
+          </SocialBtn>
+        </div>
+        <p className="mt-6 text-center text-xs text-forest-soft">
+          © 2026 ROMproducător. Toate drepturile rezervate.
+        </p>
+      </footer>
 
       {videoOpen && (
         <div
@@ -320,7 +289,7 @@ function Index() {
           onClick={() => setVideoOpen(false)}
         >
           <button
-            className="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-full bg-cream/95 text-forest transition-transform hover:scale-105"
+            className="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-full bg-cream/95 text-forest"
             onClick={() => setVideoOpen(false)}
             aria-label="Închide"
           >
@@ -335,42 +304,11 @@ function Index() {
               <Play className="h-16 w-16 text-cream/40" />
             </div>
             <p className="absolute bottom-4 left-5 font-serif text-cream/80">
-              Video placeholder — Povestea Prisma Satului
+              Video placeholder — Povestea ROMproducător
             </p>
           </div>
         </div>
       )}
-    </div>
-  );
-}
-
-function ProductRow({
-  products,
-  saved,
-  onSave,
-  onAdd,
-}: {
-  products: Product[];
-  saved: string[];
-  onSave: (id: string) => void;
-  onAdd: (id: string) => void;
-}) {
-  if (products.length === 0) return null;
-  return (
-    <div
-      className="flex gap-[2px] overflow-x-auto snap-x snap-mandatory"
-      style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
-    >
-      {products.map((p) => (
-        <div key={p.id} className="w-[calc((100%-4px)/3)] shrink-0 snap-start">
-          <ProductCard
-            product={p}
-            isSaved={saved.includes(p.id)}
-            onSave={() => onSave(p.id)}
-            onAdd={() => onAdd(p.id)}
-          />
-        </div>
-      ))}
     </div>
   );
 }
@@ -388,9 +326,10 @@ function IconBtn({
 }) {
   return (
     <button
+      type="button"
       onClick={onClick}
       aria-label={label}
-      className="relative grid h-10 w-10 place-items-center rounded-full bg-card/80 text-forest ring-1 ring-forest/10 backdrop-blur transition-all hover:scale-105 hover:bg-card hover:shadow-md"
+      className="relative grid h-10 w-10 place-items-center rounded-full text-forest transition-colors hover:bg-forest/5"
     >
       {children}
       {badge !== undefined && badge > 0 && (
@@ -402,81 +341,22 @@ function IconBtn({
   );
 }
 
-function ProductCard({
-  product,
-  isSaved,
-  onSave,
-  onAdd,
+function SocialBtn({
+  children,
+  label,
+  className,
 }: {
-  product: Product;
-  isSaved: boolean;
-  onSave: () => void;
-  onAdd: () => void;
+  children: React.ReactNode;
+  label: string;
+  className?: string;
 }) {
   return (
-    <Link
-      to="/produs/$id"
-      params={{ id: product.id }}
-      className="group flex flex-col overflow-hidden rounded-lg border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg"
+    <button
+      type="button"
+      aria-label={label}
+      className={`grid h-12 w-12 place-items-center rounded-full transition-transform hover:scale-105 ${className ?? ""}`}
     >
-      <div className="relative aspect-square overflow-hidden bg-cream">
-        <img
-          src={product.image}
-          alt={product.name}
-          loading="lazy"
-          width={256}
-          height={256}
-          className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105"
-        />
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            onSave();
-          }}
-          aria-label="Salvează"
-          className="absolute right-1 top-1 grid h-4 w-4 place-items-center rounded-full bg-cream/90 text-forest backdrop-blur transition-transform hover:scale-110"
-        >
-          <Heart className={`h-2 w-2 ${isSaved ? "fill-terracotta text-terracotta" : ""}`} />
-        </button>
-        <span className="absolute bottom-1 left-1 rounded-full bg-cream/95 px-1.5 py-0.5 text-[7px] font-semibold text-forest shadow-sm backdrop-blur">
-          {product.region}
-        </span>
-      </div>
-      <div className="flex flex-1 flex-col justify-between p-1">
-        <h3 className="font-serif text-[10px] leading-tight text-forest">{product.name}</h3>
-        <div className="flex items-center justify-between pt-0.5">
-          <p className="text-[8px] text-forest-soft">
-            {product.weights[0]} · {product.price} lei
-          </p>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onAdd();
-            }}
-            aria-label="Adaugă în coș"
-            className="grid h-4 w-4 place-items-center rounded-full bg-honey text-forest shadow-sm transition-transform hover:scale-110"
-          >
-            <Plus className="h-2 w-2" />
-          </button>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-function MapBackground() {
-  // Framing ca pe Pro Max (scale 1.32 + ușor dreapta/jos), pe tot ecranul hero.
-  // Produsele sunt overlay — sudul României rămâne deasupra lor.
-  return (
-    <div className="absolute inset-0 overflow-hidden bg-forest">
-      <img
-        src={romaniaHeroMap}
-        alt="Hartă România"
-        className="pointer-events-none absolute inset-0 h-full w-full object-contain object-[center_22%] origin-center"
-        style={{ transform: "scale(1.32) translate(1.2%, -2%)" }}
-      />
-    </div>
+      {children}
+    </button>
   );
 }
