@@ -48,7 +48,7 @@ const CATEGORIES = [
   { name: "Lectură", icon: BookOpen },
   { name: "Auto", icon: Car },
   { name: "Bricolaj", icon: Hammer },
-  { name: "Casă & grădină", icon: Sprout },
+  { name: "Casă grădină", icon: Sprout },
   { name: "Bijuterii", icon: Gem },
   { name: "Unelte", icon: Wrench },
   { name: "Jucării", icon: ToyBrick },
@@ -181,24 +181,20 @@ function Index() {
       </header>
 
       {/* Hero — harta României */}
-      <section className="relative mx-auto max-w-6xl px-1">
-        <div
-          className="relative aspect-[4/3] w-full overflow-hidden"
-          style={{
-            WebkitMaskImage:
-              "radial-gradient(ellipse 64% 70% at 50% 50%, #000 52%, rgba(0,0,0,0.5) 76%, transparent 97%)",
-            maskImage:
-              "radial-gradient(ellipse 64% 70% at 50% 50%, #000 52%, rgba(0,0,0,0.5) 76%, transparent 97%)",
-          }}
-        >
+      <section className="relative mx-auto max-w-6xl px-1.5">
+        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md bg-[#f1f1ee]">
           <img
             src={romaniaHeroMap}
             alt="Hartă România"
             className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-            style={{ objectPosition: "50% 30%", transform: "scale(1.08)" }}
+            style={{
+              objectPosition: "45% 32%",
+              transform: "translateX(5%) scale(1.3)",
+              transformOrigin: "45% 50%",
+            }}
           />
         </div>
-        <div className="pointer-events-none absolute left-1/2 top-[48%] -translate-x-1/2 -translate-y-full">
+        <div className="pointer-events-none absolute left-1/2 top-[47%] -translate-x-1/2 -translate-y-full">
           <span className="relative block animate-pin">
             <MapPin className="h-9 w-9 fill-terracotta text-terracotta drop-shadow-md" strokeWidth={1.4} />
             <span className="absolute left-1/2 top-[9px] -translate-x-1/2 text-[9px] font-bold text-white">
@@ -213,10 +209,10 @@ function Index() {
         Platforma producătorilor români
       </p>
 
-      {/* Media 9:16 */}
-      <section className="mx-auto max-w-6xl px-2">
+      {/* Media */}
+      <section className="mx-auto max-w-6xl px-1.5">
         <div
-          className="flex gap-1.5 overflow-x-auto pb-1 snap-x snap-mandatory"
+          className="flex gap-2 overflow-x-auto pb-1 snap-x snap-mandatory"
           style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
         >
           {MEDIA_ITEMS.map((item) => (
@@ -224,7 +220,7 @@ function Index() {
               key={item.id}
               type="button"
               onClick={() => item.type === "video" && setVideoOpen(true)}
-              className="relative aspect-[9/16] w-[29.5%] shrink-0 snap-start overflow-hidden rounded-lg bg-forest"
+              className="relative aspect-[19/20] w-[32.5%] shrink-0 snap-start overflow-hidden rounded-md bg-forest"
               aria-label={item.label}
             >
               <img
@@ -258,20 +254,20 @@ function Index() {
 
       {/* Categorii */}
       <section className="mx-auto max-w-6xl px-3 pt-5">
-        <div className="rounded-[28px] bg-forest/[0.06] px-2 py-4">
-          <div className="grid grid-cols-4 gap-y-4">
+        <div className="rounded-2xl bg-forest/[0.07] px-1 py-3">
+          <div className="flex flex-wrap justify-center gap-y-3">
             {CATEGORIES.map((c) => {
               const Icon = c.icon;
               return (
                 <Link
                   key={c.name}
                   to="/categorii"
-                  className="flex flex-col items-center gap-1.5 text-center"
+                  className="flex w-1/5 flex-col items-center gap-1 px-0.5 text-center"
                 >
-                  <span className="grid h-11 w-11 place-items-center rounded-full bg-white text-forest shadow-sm ring-1 ring-forest/10 transition-transform hover:scale-105">
-                    <Icon className="h-5 w-5" strokeWidth={1.5} />
+                  <Icon className="h-8 w-8 text-forest/80 transition-transform hover:scale-105" strokeWidth={1.3} />
+                  <span className="whitespace-nowrap text-[11px] font-medium leading-tight text-forest">
+                    {c.name}
                   </span>
-                  <span className="text-[12px] font-medium leading-tight text-forest">{c.name}</span>
                 </Link>
               );
             })}
@@ -280,8 +276,8 @@ function Index() {
       </section>
 
       {/* Stats */}
-      <section className="mx-auto max-w-6xl px-3 pt-4">
-        <div className="grid grid-cols-3 divide-x divide-white/15 rounded-2xl bg-forest text-cream">
+      <section className="mt-4 bg-forest text-cream">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-3 py-2.5">
           <Stat n="350" l="producători" />
           <Stat n="1500" l="produse" />
           <Stat n="30" l="zile retur" />
@@ -289,29 +285,22 @@ function Index() {
       </section>
 
       {/* Social */}
-      <footer className="mx-auto max-w-6xl px-4 pb-10 pt-6">
-        <div className="flex items-center justify-center gap-3">
-          <SocialBtn label="Google" className="bg-white ring-1 ring-forest/10">
+      <footer className="mx-auto max-w-6xl px-4 pb-10 pt-4">
+        <div className="flex items-center justify-between px-1">
+          <SocialBtn label="Google">
             <GoogleG />
           </SocialBtn>
-          <SocialBtn label="YouTube" className="bg-[#FF0000] text-white">
-            <Youtube className="h-5 w-5" strokeWidth={1.8} />
+          <SocialBtn label="YouTube" className="text-[#FF0000]">
+            <Youtube className="h-8 w-8" strokeWidth={1.6} />
           </SocialBtn>
-          <SocialBtn
-            label="Instagram"
-            className="text-white"
-            style={{
-              background:
-                "radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)",
-            }}
-          >
-            <Instagram className="h-5 w-5" strokeWidth={1.8} />
+          <SocialBtn label="Instagram" className="text-[#E1306C]">
+            <Instagram className="h-7 w-7" strokeWidth={1.8} />
           </SocialBtn>
-          <SocialBtn label="TikTok" className="bg-black text-white">
+          <SocialBtn label="TikTok" className="text-black">
             <TikTokIcon />
           </SocialBtn>
-          <SocialBtn label="Facebook" className="bg-[#1877F2] text-white">
-            <Facebook className="h-5 w-5 fill-white" strokeWidth={0} />
+          <SocialBtn label="Facebook" className="text-[#1877F2]">
+            <Facebook className="h-7 w-7 fill-current" strokeWidth={0} />
           </SocialBtn>
         </div>
         <p className="mt-6 text-center text-[11px] text-forest-soft">
@@ -352,10 +341,9 @@ function Index() {
 
 function Stat({ n, l }: { n: string; l: string }) {
   return (
-    <div className="px-2 py-3.5 text-center">
-      <p className="font-serif text-[22px] font-semibold leading-none">{n}</p>
-      <p className="mt-1 text-[10px] uppercase tracking-[0.12em] text-cream/75">{l}</p>
-    </div>
+    <p className="whitespace-nowrap text-[13px] font-bold uppercase leading-none tracking-wide">
+      {n} {l}
+    </p>
   );
 }
 
@@ -403,7 +391,7 @@ function SocialBtn({
       type="button"
       aria-label={label}
       style={style}
-      className={`grid h-11 w-11 place-items-center rounded-full shadow-sm transition-transform hover:scale-105 ${className ?? ""}`}
+      className={`grid h-10 w-10 place-items-center transition-transform hover:scale-110 ${className ?? ""}`}
     >
       {children}
     </button>
@@ -412,7 +400,7 @@ function SocialBtn({
 
 function GoogleG() {
   return (
-    <svg viewBox="0 0 48 48" className="h-5 w-5" aria-hidden="true">
+    <svg viewBox="0 0 48 48" className="h-7 w-7" aria-hidden="true">
       <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.5l6.7-6.7C35.6 2.6 30.2 0 24 0 14.6 0 6.5 5.4 2.6 13.3l7.8 6C12.3 13.5 17.7 9.5 24 9.5z" />
       <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z" />
       <path fill="#FBBC05" d="M10.4 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.8-6A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.7l7.8-6z" />
@@ -423,7 +411,7 @@ function GoogleG() {
 
 function TikTokIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
+    <svg viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor" aria-hidden="true">
       <path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5 2.59 2.59 0 0 1-2.59-2.59 2.59 2.59 0 0 1 3.38-2.47V9.66a5.7 5.7 0 0 0-.79-.05 5.68 5.68 0 0 0-5.68 5.68A5.68 5.68 0 0 0 9.86 21a5.68 5.68 0 0 0 5.68-5.68V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3a4.3 4.3 0 0 1-3.24-1.48z" />
     </svg>
   );
