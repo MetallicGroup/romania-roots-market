@@ -185,7 +185,7 @@ function Index() {
 
       {/* Hero — harta României */}
       <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-1.5" style={{ minHeight: "30dvh" }}>
-        <div className="relative min-h-0 w-full flex-1 overflow-hidden rounded-[5px] bg-[#f1f1ee]">
+        <div className="relative min-h-0 w-full flex-1 overflow-hidden rounded-[3px] bg-[#f1f1ee]">
           <div className="absolute inset-0 flex items-center justify-center p-2">
             <div className="relative h-full" style={{ aspectRatio: "649 / 508" }}>
               <img
@@ -215,7 +215,7 @@ function Index() {
       {/* Media */}
       <section className="mx-auto w-full max-w-6xl shrink-0 px-1.5">
         <div
-          className="flex gap-1.5 overflow-x-auto snap-x snap-mandatory"
+          className="flex gap-[3px] overflow-x-auto snap-x snap-mandatory"
           style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
         >
           {MEDIA_ITEMS.map((item) => (
@@ -223,7 +223,7 @@ function Index() {
               key={item.id}
               type="button"
               onClick={() => item.type === "video" && setVideoOpen(true)}
-              className="relative aspect-[17/20] w-[31%] shrink-0 snap-start sm:w-44 overflow-hidden rounded-[5px] bg-forest"
+              className="relative aspect-[17/20] w-[31%] shrink-0 snap-start sm:w-44 overflow-hidden rounded-[3px] bg-forest"
               aria-label={item.label}
             >
               <img
