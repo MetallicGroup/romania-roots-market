@@ -57,6 +57,9 @@ const CATEGORIES = [
   { name: "Mobilă", icon: Armchair },
 ] as const;
 
+// Aliniere ca în mockup-ul clientului: 4 / 5 / 5
+const CATEGORY_ROWS = [CATEGORIES.slice(0, 4), CATEGORIES.slice(4, 9), CATEGORIES.slice(9, 14)];
+
 type MediaItem = {
   id: string;
   type: "video" | "foto";
@@ -182,7 +185,7 @@ function Index() {
 
       {/* Hero — harta României */}
       <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-1.5" style={{ minHeight: "30dvh" }}>
-        <div className="relative min-h-0 w-full flex-1 overflow-hidden rounded-md bg-[#f1f1ee]">
+        <div className="relative min-h-0 w-full flex-1 overflow-hidden rounded-[5px] bg-[#f1f1ee]">
           <div className="absolute inset-0 flex items-center justify-center p-2">
             <div className="relative h-full" style={{ aspectRatio: "649 / 508" }}>
               <img
@@ -220,7 +223,7 @@ function Index() {
               key={item.id}
               type="button"
               onClick={() => item.type === "video" && setVideoOpen(true)}
-              className="relative aspect-[17/20] w-[31%] shrink-0 snap-start sm:w-44 overflow-hidden rounded-md bg-forest"
+              className="relative aspect-[17/20] w-[31%] shrink-0 snap-start sm:w-44 overflow-hidden rounded-[5px] bg-forest"
               aria-label={item.label}
             >
               <img
@@ -254,22 +257,26 @@ function Index() {
 
       {/* Categorii */}
       <section className="mx-auto w-full max-w-6xl shrink-0 px-2 pt-2.5 sm:max-w-2xl">
-        <div className="flex flex-wrap justify-center gap-y-1.5">
-          {CATEGORIES.map((c) => {
-            const Icon = c.icon;
-            return (
-              <Link
-                key={c.name}
-                to="/categorii"
-                className="flex w-1/5 flex-col items-center gap-0.5 px-0.5 text-center"
-              >
-                <Icon className="h-7 w-7 text-forest/70 transition-transform hover:scale-105" strokeWidth={1.4} />
-                <span className="whitespace-nowrap text-[12px] font-medium leading-tight text-forest">
-                  {c.name}
-                </span>
-              </Link>
-            );
-          })}
+        <div className="flex flex-col gap-y-2">
+          {CATEGORY_ROWS.map((row, i) => (
+            <div key={i} className="flex items-start justify-around">
+              {row.map((c) => {
+                const Icon = c.icon;
+                return (
+                  <Link
+                    key={c.name}
+                    to="/categorii"
+                    className="flex flex-col items-center gap-0.5 text-center"
+                  >
+                    <Icon className="h-6 w-6 text-forest/70 transition-transform hover:scale-105" strokeWidth={1.4} />
+                    <span className="whitespace-nowrap text-[12px] font-medium leading-tight text-forest">
+                      {c.name}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          ))}
         </div>
       </section>
 
