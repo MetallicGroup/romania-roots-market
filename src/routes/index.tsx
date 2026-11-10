@@ -29,7 +29,7 @@ import {
   Youtube,
   Instagram,
 } from "lucide-react";
-import romaniaHeroMap from "@/assets/romania-hero-map.webp";
+import romaniaCutout from "@/assets/romania-cutout.webp";
 import catAlimentare from "@/assets/categories/alimentare.jpg";
 import catBauturi from "@/assets/categories/bauturi.jpg";
 import catCasa from "@/assets/categories/casa-gradina.jpg";
@@ -91,10 +91,10 @@ function Index() {
     : [];
 
   return (
-    <div className="min-h-screen bg-white text-forest">
+    <div className="flex min-h-[100dvh] flex-col bg-white text-forest">
       {/* Header */}
-      <header className="sticky top-0 z-30 bg-white/95 backdrop-blur">
-        <div className="mx-auto max-w-6xl px-4 pt-3">
+      <header className="relative z-30 shrink-0 bg-white">
+        <div className="mx-auto max-w-6xl px-4 pt-2.5">
           <div className="flex items-center justify-between">
             <Link to="/" className="font-serif text-[26px] font-semibold leading-none tracking-tight">
               <span className="text-[#CE1126]">R</span>
@@ -114,7 +114,7 @@ function Index() {
               </IconBtn>
             </div>
           </div>
-          <div className="-mx-2 flex items-center justify-between pb-1.5 pt-0.5">
+          <div className="-mx-2 flex items-center justify-between pb-1 pt-0">
             <Link
               to="/categorii"
               className="grid h-9 w-9 place-items-center rounded-full text-forest hover:bg-forest/5"
@@ -137,7 +137,7 @@ function Index() {
           </div>
         </div>
         {searchOpen && (
-          <div className="border-t border-forest/10 px-4 py-3">
+          <div className="absolute inset-x-0 top-full border-t border-forest/10 bg-white px-4 py-3 shadow-lg">
             <div className="mx-auto flex max-w-6xl items-center gap-2 rounded-full border border-forest/15 bg-white px-3 py-2">
               <Search className="h-4 w-4 shrink-0 text-forest-soft" />
               <input
@@ -181,38 +181,38 @@ function Index() {
       </header>
 
       {/* Hero — harta României */}
-      <section className="relative mx-auto max-w-6xl px-1.5">
-        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md bg-[#f1f1ee]">
-          <img
-            src={romaniaHeroMap}
-            alt="Hartă România"
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-            style={{
-              objectPosition: "45% 32%",
-              transform: "translateX(5%) scale(1.3)",
-              transformOrigin: "45% 50%",
-            }}
-          />
-        </div>
-        <div className="pointer-events-none absolute left-1/2 top-[47%] -translate-x-1/2 -translate-y-full">
-          <span className="relative block animate-pin">
-            <MapPin className="h-9 w-9 fill-terracotta text-terracotta drop-shadow-md" strokeWidth={1.4} />
-            <span className="absolute left-1/2 top-[9px] -translate-x-1/2 text-[9px] font-bold text-white">
-              C
-            </span>
-          </span>
+      <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-1.5" style={{ minHeight: "30dvh" }}>
+        <div className="relative min-h-0 w-full flex-1 overflow-hidden rounded-md bg-[#f1f1ee]">
+          <div className="absolute inset-0 flex items-center justify-center p-2">
+            <div className="relative h-full" style={{ aspectRatio: "649 / 508" }}>
+              <img
+                src={romaniaCutout}
+                alt="Hartă România"
+                className="pointer-events-none h-full w-full object-contain"
+                style={{ filter: "drop-shadow(0 4px 10px rgba(0,0,0,0.18))" }}
+              />
+              <div className="pointer-events-none absolute left-[51%] top-[51%] -translate-x-1/2 -translate-y-full">
+                <span className="relative block animate-pin">
+                  <MapPin className="h-9 w-9 fill-[#8B1A1A] text-[#8B1A1A] drop-shadow-md" strokeWidth={1.4} />
+                  <span className="absolute left-1/2 top-[9px] -translate-x-1/2 text-[9px] font-bold text-white">
+                    C
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Tagline */}
-      <p className="mx-auto max-w-6xl px-4 pb-3 pt-1 font-serif text-[19px] italic leading-snug text-forest">
+      <p className="mx-auto w-full max-w-6xl shrink-0 px-4 py-1.5 font-serif text-[19px] italic leading-snug text-forest">
         Platforma producătorilor români
       </p>
 
       {/* Media */}
-      <section className="mx-auto max-w-6xl px-1.5">
+      <section className="mx-auto w-full max-w-6xl shrink-0 px-1.5">
         <div
-          className="flex gap-2 overflow-x-auto pb-1 snap-x snap-mandatory"
+          className="flex gap-1.5 overflow-x-auto snap-x snap-mandatory"
           style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
         >
           {MEDIA_ITEMS.map((item) => (
@@ -220,7 +220,7 @@ function Index() {
               key={item.id}
               type="button"
               onClick={() => item.type === "video" && setVideoOpen(true)}
-              className="relative aspect-[19/20] w-[32.5%] shrink-0 snap-start overflow-hidden rounded-md bg-forest"
+              className="relative aspect-[17/20] w-[31%] shrink-0 snap-start sm:w-44 overflow-hidden rounded-md bg-forest"
               aria-label={item.label}
             >
               <img
@@ -253,31 +253,29 @@ function Index() {
       </section>
 
       {/* Categorii */}
-      <section className="mx-auto max-w-6xl px-3 pt-5">
-        <div className="rounded-2xl bg-forest/[0.07] px-1 py-3">
-          <div className="flex flex-wrap justify-center gap-y-3">
-            {CATEGORIES.map((c) => {
-              const Icon = c.icon;
-              return (
-                <Link
-                  key={c.name}
-                  to="/categorii"
-                  className="flex w-1/5 flex-col items-center gap-1 px-0.5 text-center"
-                >
-                  <Icon className="h-8 w-8 text-forest/80 transition-transform hover:scale-105" strokeWidth={1.3} />
-                  <span className="whitespace-nowrap text-[11px] font-medium leading-tight text-forest">
-                    {c.name}
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
+      <section className="mx-auto w-full max-w-6xl shrink-0 px-2 pt-2.5 sm:max-w-2xl">
+        <div className="flex flex-wrap justify-center gap-y-1.5">
+          {CATEGORIES.map((c) => {
+            const Icon = c.icon;
+            return (
+              <Link
+                key={c.name}
+                to="/categorii"
+                className="flex w-1/5 flex-col items-center gap-0.5 px-0.5 text-center"
+              >
+                <Icon className="h-7 w-7 text-forest/70 transition-transform hover:scale-105" strokeWidth={1.4} />
+                <span className="whitespace-nowrap text-[12px] font-medium leading-tight text-forest">
+                  {c.name}
+                </span>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
       {/* Stats */}
-      <section className="mt-4 bg-forest text-cream">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-3 py-2.5">
+      <section className="mt-auto shrink-0 bg-forest text-cream">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-3 py-2 sm:max-w-2xl">
           <Stat n="350" l="producători" />
           <Stat n="1500" l="produse" />
           <Stat n="30" l="zile retur" />
@@ -285,7 +283,7 @@ function Index() {
       </section>
 
       {/* Social */}
-      <footer className="mx-auto max-w-6xl px-4 pb-10 pt-4">
+      <footer className="mx-auto w-full max-w-6xl shrink-0 px-4 py-1.5 sm:max-w-md">
         <div className="flex items-center justify-between px-1">
           <SocialBtn label="Google">
             <GoogleG />
@@ -303,9 +301,6 @@ function Index() {
             <Facebook className="h-7 w-7 fill-current" strokeWidth={0} />
           </SocialBtn>
         </div>
-        <p className="mt-6 text-center text-[11px] text-forest-soft">
-          © 2026 ROMproducător · Toate drepturile rezervate
-        </p>
       </footer>
 
       {videoOpen && (
