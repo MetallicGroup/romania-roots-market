@@ -290,8 +290,8 @@ function Index() {
       </section>
 
       {/* Social */}
-      <footer className="mx-auto w-full max-w-6xl shrink-0 px-4 py-1.5 sm:max-w-md">
-        <div className="flex items-center justify-between px-1">
+      <footer className="mx-auto w-full max-w-6xl shrink-0 px-4 py-1.5">
+        <div className="mx-auto flex w-1/2 items-center justify-between">
           <SocialBtn label="Google">
             <GoogleG />
           </SocialBtn>
@@ -301,11 +301,14 @@ function Index() {
           <SocialBtn label="Instagram" className="text-[#E1306C]">
             <Instagram className="h-7 w-7" strokeWidth={1.8} />
           </SocialBtn>
-          <SocialBtn label="TikTok" className="text-black">
-            <TikTokIcon />
-          </SocialBtn>
           <SocialBtn label="Facebook" className="text-[#1877F2]">
             <Facebook className="h-7 w-7 fill-current" strokeWidth={0} />
+          </SocialBtn>
+          <SocialBtn label="X" className="text-black">
+            <XIcon />
+          </SocialBtn>
+          <SocialBtn label="TikTok" className="text-black">
+            <TikTokIcon />
           </SocialBtn>
         </div>
       </footer>
@@ -407,6 +410,14 @@ function GoogleG() {
       <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z" />
       <path fill="#FBBC05" d="M10.4 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.8-6A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.7l7.8-6z" />
       <path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.9 2.3-8.4 2.3-6.3 0-11.7-4-13.6-9.8l-7.8 6C6.5 42.6 14.6 48 24 48z" />
+    </svg>
+  );
+}
+
+function XIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.727-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" />
     </svg>
   );
 }
