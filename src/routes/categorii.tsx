@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { categories, products } from "@/lib/products";
 import { SiteHeader, SiteFooter } from "@/components/site-header";
+import { ProductStars } from "@/components/product-stars";
 
 export const Route = createFileRoute("/categorii")({
   head: () => ({
@@ -33,8 +34,9 @@ function CategoriiPage() {
                 params={{ slug: c.slug }}
                 className="group overflow-hidden rounded-2xl border border-forest/10 bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
               >
-                <div className="aspect-[4/3] overflow-hidden bg-cream">
+                <div className="relative aspect-[4/3] overflow-hidden bg-cream">
                   {sample && <img src={sample.image} alt={c.name} loading="lazy" width={512} height={384} className="h-full w-full object-cover transition-transform group-hover:scale-105" />}
+                  <ProductStars />
                 </div>
                 <div className="p-5">
                   <div className="flex items-baseline justify-between">

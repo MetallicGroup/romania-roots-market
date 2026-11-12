@@ -185,15 +185,15 @@ function Index() {
         )}
       </header>
 
-      {/* Hero — harta României (poziționare ca în mockup) */}
-      <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-3" style={{ minHeight: "34dvh" }}>
+      {/* Hero — harta pe toată lățimea fundalului alb */}
+      <section className="flex w-full flex-1 flex-col" style={{ minHeight: "34dvh" }}>
         <div className="relative min-h-0 w-full flex-1 overflow-hidden bg-white">
-          <div className="absolute inset-0 flex items-center justify-center px-1 py-2">
-            <div className="relative h-full max-h-full w-full" style={{ maxWidth: "min(100%, 92dvh * 649 / 508)" }}>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="relative w-full" style={{ aspectRatio: "649 / 508" }}>
               <img
                 src={romaniaCutout}
                 alt="Hartă România"
-                className="pointer-events-none h-full w-full object-contain object-center"
+                className="pointer-events-none absolute inset-0 h-full w-full object-contain object-center"
                 style={{
                   filter:
                     "drop-shadow(0 0 0.6px #111) drop-shadow(0 0 0.6px #111) drop-shadow(0 3px 8px rgba(0,0,0,0.16))",

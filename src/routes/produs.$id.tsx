@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getProduct, relatedProducts } from "@/lib/products";
 import { SiteHeader, SiteFooter } from "@/components/site-header";
 import { useCart } from "@/lib/cart";
+import { ProductStars } from "@/components/product-stars";
 import { Heart, MapPin, Plus, Minus, ShoppingBag, Play, Share2 } from "lucide-react";
 
 export const Route = createFileRoute("/produs/$id")({
@@ -195,6 +196,7 @@ function ProductPage() {
                 >
                   <div className="relative aspect-square overflow-hidden bg-cream">
                     <img src={p.image} alt={p.name} loading="lazy" width={512} height={512} className="h-full w-full object-cover transition-transform group-hover:scale-105" />
+                    <ProductStars />
                     <span className="absolute bottom-2 left-2 rounded-full bg-cream/95 px-2.5 py-1 text-[10px] font-semibold text-forest shadow-sm backdrop-blur">
                       {p.region}
                     </span>
