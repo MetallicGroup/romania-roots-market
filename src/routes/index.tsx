@@ -290,10 +290,13 @@ function Index() {
       </section>
 
       {/* Social */}
-      <footer className="mx-auto w-full max-w-6xl shrink-0 px-4 py-1.5">
-        <div className="mx-auto flex w-1/2 items-center justify-between">
+      <footer className="w-full shrink-0 px-4 py-1.5">
+        <div className="flex w-1/2 items-center justify-between">
           <SocialBtn label="Google">
             <GoogleG />
+          </SocialBtn>
+          <SocialBtn label="TikTok" className="text-black">
+            <TikTokIcon />
           </SocialBtn>
           <SocialBtn label="YouTube" className="text-[#FF0000]">
             <Youtube className="h-8 w-8" strokeWidth={1.6} />
@@ -301,14 +304,11 @@ function Index() {
           <SocialBtn label="Instagram" className="text-[#E1306C]">
             <Instagram className="h-7 w-7" strokeWidth={1.8} />
           </SocialBtn>
-          <SocialBtn label="Facebook" className="text-[#1877F2]">
-            <Facebook className="h-7 w-7 fill-current" strokeWidth={0} />
-          </SocialBtn>
           <SocialBtn label="X" className="text-black">
             <XIcon />
           </SocialBtn>
-          <SocialBtn label="TikTok" className="text-black">
-            <TikTokIcon />
+          <SocialBtn label="Facebook" className="text-[#1877F2]">
+            <Facebook className="h-7 w-7 fill-current" strokeWidth={0} />
           </SocialBtn>
         </div>
       </footer>
