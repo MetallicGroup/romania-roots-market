@@ -117,7 +117,7 @@ function Index() {
               </IconBtn>
             </div>
           </div>
-          <div className="-mx-2 flex items-center justify-between pb-1 pt-0">
+          <div className="-mx-2 flex items-center justify-between pb-1.5 pt-0">
             <Link
               to="/categorii"
               className="grid h-9 w-9 place-items-center rounded-full text-forest hover:bg-forest/5"
@@ -139,6 +139,8 @@ function Index() {
             </button>
           </div>
         </div>
+        {/* Linie sub search / deasupra hărții */}
+        <div className="border-b border-black/25" />
         {searchOpen && (
           <div className="absolute inset-x-0 top-full border-t border-forest/10 bg-white px-4 py-3 shadow-lg">
             <div className="mx-auto flex max-w-6xl items-center gap-2 rounded-full border border-forest/15 bg-white px-3 py-2">
@@ -183,16 +185,19 @@ function Index() {
         )}
       </header>
 
-      {/* Hero — harta României */}
-      <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-1.5" style={{ minHeight: "30dvh" }}>
-        <div className="relative min-h-0 w-full flex-1 overflow-hidden rounded-[3px] bg-[#f1f1ee]">
-          <div className="absolute inset-0 flex items-center justify-center p-2">
-            <div className="relative h-full" style={{ aspectRatio: "649 / 508" }}>
+      {/* Hero — harta României (poziționare ca în mockup) */}
+      <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-3" style={{ minHeight: "34dvh" }}>
+        <div className="relative min-h-0 w-full flex-1 overflow-hidden bg-white">
+          <div className="absolute inset-0 flex items-center justify-center px-1 py-2">
+            <div className="relative h-full max-h-full w-full" style={{ maxWidth: "min(100%, 92dvh * 649 / 508)" }}>
               <img
                 src={romaniaCutout}
                 alt="Hartă România"
-                className="pointer-events-none h-full w-full object-contain"
-                style={{ filter: "drop-shadow(0 4px 10px rgba(0,0,0,0.18))" }}
+                className="pointer-events-none h-full w-full object-contain object-center"
+                style={{
+                  filter:
+                    "drop-shadow(0 0 0.6px #111) drop-shadow(0 0 0.6px #111) drop-shadow(0 3px 8px rgba(0,0,0,0.16))",
+                }}
               />
               <div className="pointer-events-none absolute left-[51%] top-[51%] -translate-x-1/2 -translate-y-full">
                 <span className="relative block animate-pin">
@@ -280,12 +285,19 @@ function Index() {
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="mt-auto shrink-0 bg-forest text-cream">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-3 py-2 sm:max-w-2xl">
-          <Stat n="350" l="producători" />
-          <Stat n="1500" l="produse" />
-          <Stat n="30" l="zile retur" />
+      {/* Stats — bară gri, text negru care alunecă */}
+      <section className="mt-auto shrink-0 overflow-hidden bg-[#d8d8d8] text-black">
+        <div className="flex animate-marquee whitespace-nowrap py-2">
+          {[0, 1].map((copy) => (
+            <div key={copy} className="flex shrink-0 items-center gap-10 px-6">
+              <Stat n="350" l="producători" />
+              <Stat n="1500" l="produse" />
+              <Stat n="30" l="zile retur" />
+              <Stat n="350" l="producători" />
+              <Stat n="1500" l="produse" />
+              <Stat n="30" l="zile retur" />
+            </div>
+          ))}
         </div>
       </section>
 
@@ -346,7 +358,7 @@ function Index() {
 
 function Stat({ n, l }: { n: string; l: string }) {
   return (
-    <p className="whitespace-nowrap text-[13px] font-bold uppercase leading-none tracking-wide">
+    <p className="whitespace-nowrap text-[13px] font-bold uppercase leading-none tracking-wide text-black">
       {n} {l}
     </p>
   );
